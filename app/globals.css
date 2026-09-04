@@ -1,0 +1,250 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────
+   EMBER & OAK — Custom Design Token Theme
+   ─────────────────────────────────────────── */
+
+:root {
+  /* Core palette */
+  --color-espresso: #0B0705;
+  --color-umber: #1A0F0A;
+  --color-smoke: #2A1F1A;
+  --color-amber: #D89B5A;
+  --color-copper: #B8722E;
+  --color-cream: #F5E6D0;
+  --color-gold: #C9A86C;
+  --color-charcoal: #121010;
+
+  /* Semantic tokens */
+  --background: #0B0705;
+  --foreground: #F5E6D0;
+  --muted: #2A1F1A;
+  --accent: #D89B5A;
+  --accent-secondary: #B8722E;
+
+  /* Typography */
+  --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-body: var(--font-geist-sans, system-ui, -apple-system, sans-serif);
+  --font-mono: var(--font-geist-mono, ui-monospace, monospace);
+
+  /* Spacing scale */
+  --section-padding: clamp(4rem, 8vw, 8rem);
+
+  /* Glassmorphism */
+  --glass-bg: rgba(11, 7, 5, 0.6);
+  --glass-border: rgba(216, 155, 90, 0.12);
+  --glass-blur: 16px;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-espresso: var(--color-espresso);
+  --color-umber: var(--color-umber);
+  --color-smoke: var(--color-smoke);
+  --color-amber: var(--color-amber);
+  --color-copper: var(--color-copper);
+  --color-cream: var(--color-cream);
+  --color-gold: var(--color-gold);
+  --color-charcoal: var(--color-charcoal);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-secondary: var(--accent-secondary);
+  --font-sans: var(--font-body);
+  --font-mono: var(--font-mono);
+  --font-display: var(--font-display);
+}
+
+/* ─── Base resets ────────────────────────── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto; /* Lenis handles smooth scrolling */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* ─── Custom scrollbar (Webkit) ──────────── */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-espresso);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-smoke);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-amber);
+}
+
+/* ─── Selection ──────────────────────────── */
+
+::selection {
+  background: rgba(216, 155, 90, 0.3);
+  color: var(--color-cream);
+}
+
+/* ─── Typography utilities ───────────────── */
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.text-gradient-amber {
+  background: linear-gradient(135deg, var(--color-amber), var(--color-copper));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Glassmorphism base ─────────────────── */
+
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+}
+
+/* ─── Grain texture overlay ──────────────── */
+
+.grain-overlay::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* ─── Smooth Lenis styles ────────────────── */
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* ─── Reduced motion ─────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ─── Canvas container ───────────────────── */
+
+.canvas-container {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.canvas-container canvas {
+  pointer-events: auto;
+}
+
+/* ─── Section reveal animation ───────────── */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* ─── Button micro-interactions ──────────── */
+
+.btn-tactile {
+  transition: transform 0.15s cubic-bezier(0.2, 0, 0, 1),
+    box-shadow 0.15s cubic-bezier(0.2, 0, 0, 1);
+  will-change: transform;
+}
+
+.btn-tactile:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 25px rgba(216, 155, 90, 0.2);
+}
+
+.btn-tactile:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: 0 2px 8px rgba(216, 155, 90, 0.15);
+}
+
+/* ─── Luxury Glow & Glass Accents ──────────── */
+
+.glow-amber-sm {
+  box-shadow: 0 0 20px rgba(216, 155, 90, 0.15);
+}
+
+.glow-amber-md {
+  box-shadow: 0 0 35px rgba(216, 155, 90, 0.25);
+}
+
+.glow-amber-lg {
+  box-shadow: 0 0 60px rgba(216, 155, 90, 0.35);
+}
+
+.border-glow-amber {
+  border-color: rgba(201, 168, 108, 0.35);
+}
+
+.border-glow-amber:hover {
+  border-color: rgba(216, 155, 90, 0.8);
+  box-shadow: 0 0 30px rgba(216, 155, 90, 0.25);
+}
+
