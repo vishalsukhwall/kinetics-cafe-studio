@@ -2,7 +2,7 @@
 
   <img src="https://raw.githubusercontent.com/Anmol-Baranwal/Cool-GitHub-Profile-Readme/master/assets/git%20logo/git-logo.gif" width="100" alt="Git Logo">
 
-  # ☕ VELVET BREW STUDIO
+  # ☕ KINETICS CAFE STUDIO
   ### *An Immersive, 3D Interactive Art-House Coffee Experience*
 
   <p align="center">
@@ -24,7 +24,7 @@
 
 ### ✨ Architectural Overview
 
-**Velvet Brew Studio** is a high-end, performance-optimized, single-page web application built for modern artisan coffee roasteries. It bridges the gap between digital e-commerce and interactive WebGL experiences, featuring fluid camera orbits, custom procedural particle systems, and zero-latency state management.
+**Kinetics Cafe Studio** is a high-end, performance-optimized, single-page web application built for modern artisan coffee roasteries. It bridges the gap between digital e-commerce and interactive WebGL experiences, featuring fluid camera orbits, custom procedural particle systems, and zero-latency state management.
 
 ```mermaid
 graph TD
