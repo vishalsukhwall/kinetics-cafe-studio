@@ -80,7 +80,7 @@ export default function OrderDrawer() {
             <div>
               <h2 className="text-[#F5E6D0] font-serif text-2xl">Your Order</h2>
               <span className="text-[11px] font-mono text-[#C9A86C]/80 uppercase tracking-widest">
-                Ember & Oak · Espresso Bar
+                Kinetics Caffe · Espresso Bar
               </span>
             </div>
             <button

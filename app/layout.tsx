@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Ember & Oak | Artisan Coffee Roastery',
+  title: 'Kinetics Caffe | Artisan Coffee Roastery',
   description:
     'An ultra-luxury artisan coffee experience. Hand-roasted single-origin beans, precision-brewed drinks, and an atmosphere crafted for those who appreciate the art of coffee.',
   keywords: [
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     'Portland coffee',
   ],
   openGraph: {
-    title: 'Ember & Oak | Artisan Coffee Roastery',
+    title: 'Kinetics Caffe | Artisan Coffee Roastery',
     description:
       'Where every cup tells a story. Hand-roasted, precision-brewed artisan coffee.',
     type: 'website',

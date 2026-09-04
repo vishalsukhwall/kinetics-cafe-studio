@@ -51,7 +51,7 @@ export default function Navbar() {
           </div>
           <div className="flex flex-col">
             <span className="font-serif text-lg sm:text-xl tracking-[0.25em] text-[#F5E6D0] group-hover:text-[#D89B5A] transition-colors uppercase">
-              EMBER & OAK
+              Kinetics Caffe
             </span>
             <span className="text-[9px] tracking-[0.3em] text-[#C9A86C]/70 uppercase font-light">
               Artisan Roastery · Bengaluru

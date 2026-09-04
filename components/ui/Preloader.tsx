@@ -119,7 +119,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       {/* Brand Title */}
       <div className="text-center">
         <h2 className="text-xl md:text-2xl font-serif tracking-[0.4em] uppercase text-[#F5E6D0] mb-1">
-          EMBER & OAK
+          Kinetics Caffe
         </h2>
         <p className="text-[10px] tracking-[0.3em] uppercase text-[#C9A86C]/70 font-light mb-8">
           Artisan Coffee Roastery

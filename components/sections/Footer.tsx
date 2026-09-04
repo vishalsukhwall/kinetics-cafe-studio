@@ -17,7 +17,7 @@ export default function Footer() {
                 <span className="text-[10px] font-serif text-[#D89B5A] font-bold">EO</span>
               </div>
               <h3 className="font-serif text-2xl tracking-[0.2em] text-[#F5E6D0] uppercase">
-                EMBER & OAK
+                Kinetics Caffe
               </h3>
             </div>
 
@@ -96,7 +96,7 @@ export default function Footer() {
 
         {/* Bottom Minimalist Strip */}
         <div className="pt-8 border-t border-[#1C0E07] flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] font-mono text-[#F5E6D0]/40">
-          <p>© {new Date().getFullYear()} Ember & Oak Artisan Coffee Roasters Pvt Ltd.</p>
+          <p>© {new Date().getFullYear()} Kinetics Caffe Artisan Coffee Roasters Pvt Ltd.</p>
           <div className="flex gap-4">
             <a href="#" className="hover:text-[#D89B5A]">Privacy</a>
             <a href="#" className="hover:text-[#D89B5A]">Terms</a>

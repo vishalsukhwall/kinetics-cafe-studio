@@ -110,7 +110,7 @@ export default function AIBaristaModal() {
     {
       id: 'welcome',
       sender: 'barista',
-      text: "Namaste! I'm your Ember & Oak AI Sommelier. Tell me your mood, favorite flavors, or dietary cravings, and I'll match you with the perfect roast from our Western Ghats harvests.",
+      text: "Namaste! I'm your Kinetics Caffe AI Sommelier. Tell me your mood, favorite flavors, or dietary cravings, and I'll match you with the perfect roast from our Western Ghats harvests.",
     },
   ]);
   const [isTyping, setIsTyping] = useState(false);

@@ -60,7 +60,7 @@ export default function Hero() {
     }
   };
 
-  const titleText = "EMBER & OAK";
+  const titleText = "Kinetics Caffe";
 
   return (
     <section

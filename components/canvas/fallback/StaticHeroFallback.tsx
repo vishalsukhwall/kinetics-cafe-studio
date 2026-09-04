@@ -32,7 +32,7 @@ export function StaticHeroFallback() {
         style={{ transform: `translateY(${scrollY * 0.3}px)` }}
       >
         <h1 className="text-6xl md:text-8xl font-serif tracking-widest mb-4 bg-gradient-to-br from-[#F5E6D0] via-[#D89B5A] to-[#B8722E] text-transparent bg-clip-text">
-          EMBER & OAK
+          Kinetics Caffe
         </h1>
         <p className="text-xl md:text-2xl font-light tracking-widest text-[#F5E6D0]/80 uppercase">
           Artisan Coffee Roastery
