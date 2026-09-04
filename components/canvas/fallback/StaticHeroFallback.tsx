@@ -41,7 +41,7 @@ export function StaticHeroFallback() {
       
       {/* Scroll Indicator */}
       <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 animate-pulse opacity-60">
-        <span className="uppercase text-xs tracking-widest text-[#D89B5A]">Scroll to explore</span>
+        {/* <span className="uppercase text-xs tracking-widest text-[#D89B5A]">Scroll to explore</span> */}
         <div className="w-[1px] h-12 bg-gradient-to-b from-[#D89B5A] to-transparent" />
       </div>
     </div>

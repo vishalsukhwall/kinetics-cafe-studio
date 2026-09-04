@@ -129,13 +129,7 @@ export default function Hero() {
 
       {/* 4. Minimalist Scroll Indicator */}
       <div className="relative z-20 flex justify-center items-center">
-        <button
-          onClick={() => scrollToSection('menu')}
-          className="flex items-center gap-2 text-[10px] uppercase tracking-[0.25em] text-[#C9A86C]/60 hover:text-[#D89B5A] transition-colors"
-        >
-          <span>Scroll to explore</span>
-          <ChevronDown />
-        </button>
+        
       </div>
 
     </section>
