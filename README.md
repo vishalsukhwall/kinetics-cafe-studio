@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
 
-## Getting Started
+  <img src="https://raw.githubusercontent.com/Anmol-Baranwal/Cool-GitHub-Profile-Readme/master/assets/git%20logo/git-logo.gif" width="100" alt="Git Logo">
 
-First, run the development server:
+  # ☕ VELVET BREW STUDIO
+  ### *An Immersive, 3D Interactive Art-House Coffee Experience*
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+  <p align="center">
+    <img src="https://img.shields.io/badge/Status-Production%20Ready-darkgreen?style=for-the-badge&logo=appveyor" alt="Status">
+    <img src="https://img.shields.io/badge/Three.js-R3F-black?style=for-the-badge&logo=threedotjs" alt="Three.js">
+    <img src="https://img.shields.io/badge/React-Vite-blue?style=for-the-badge&logo=react" alt="React">
+    <img src="https://img.shields.io/badge/TailwindCSS-Custom-38B2AC?style=for-the-badge&logo=tailwind-css" alt="Tailwind">
+    <img src="https://img.shields.io/badge/GSAP-Animations-orange?style=for-the-badge&logo=greensock" alt="GSAP">
+  </p>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+  <br>
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+  <!-- 3D Rotating Preview Banner / Simulation Mockup -->
+  <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="85%" alt="3D Coffee Rotation Preview">
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+</div>
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+### ✨ Architectural Overview
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Velvet Brew Studio** is a high-end, performance-optimized, single-page web application built for modern artisan coffee roasteries. It bridges the gap between digital e-commerce and interactive WebGL experiences, featuring fluid camera orbits, custom procedural particle systems, and zero-latency state management.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```mermaid
+graph TD
+    A[Cinematic WebGL Hero] --> B[Unified Signature Collection]
+    B --> C[Interactive Custom Brew Studio]
+    C --> D[AI Barista Taste Matcher]
+    D --> E[Visual Seating & Table Planner]
+    E --> F[Glassmorphic Quick Checkout]
