@@ -15,12 +15,21 @@
   --color-gold: #C9A86C;
   --color-charcoal: #121010;
 
+  /* NEW vibrant accents */
+  --color-sunset: #FF7A00;
+  --color-emerald: #1B3B2B;
+  --color-rose-gold: #C4A882;
+  --color-indigo-deep: #1B1830;
+  --color-rose-deep: #301818;
+  --color-midnight: #060302;
+
   /* Semantic tokens */
   --background: #0B0705;
   --foreground: #F5E6D0;
   --muted: #2A1F1A;
   --accent: #D89B5A;
   --accent-secondary: #B8722E;
+  --accent-vibrant: #FF7A00;
 
   /* Typography */
   --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
@@ -53,6 +62,13 @@
   --font-sans: var(--font-body);
   --font-mono: var(--font-mono);
   --font-display: var(--font-display);
+  --color-sunset: var(--color-sunset);
+  --color-emerald: var(--color-emerald);
+  --color-rose-gold: var(--color-rose-gold);
+  --color-indigo-deep: var(--color-indigo-deep);
+  --color-rose-deep: var(--color-rose-deep);
+  --color-midnight: var(--color-midnight);
+  --color-accent-vibrant: var(--accent-vibrant);
 }
 
 /* ─── Base resets ────────────────────────── */
@@ -118,6 +134,20 @@ body {
   background-clip: text;
 }
 
+.text-gradient-sunset {
+  background: linear-gradient(135deg, var(--color-amber), var(--color-sunset));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-rose {
+  background: linear-gradient(135deg, var(--color-cream), var(--color-rose-gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 /* ─── Glassmorphism base ─────────────────── */
 
 .glass {
@@ -125,6 +155,28 @@ body {
   backdrop-filter: blur(var(--glass-blur));
   -webkit-backdrop-filter: blur(var(--glass-blur));
   border: 1px solid var(--glass-border);
+}
+
+.glass-card {
+  background: rgba(20, 12, 7, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(201, 168, 108, 0.18);
+  border-radius: 1.5rem;
+}
+
+.glass-card:hover {
+  border-color: rgba(216, 155, 90, 0.5);
+  box-shadow: 0 8px 32px rgba(216, 155, 90, 0.1);
+}
+
+/* ─── UI Helpers ─────────────────────────── */
+
+.dot-leader {
+  flex: 1;
+  margin: 0 1rem;
+  border-bottom: 2px dotted rgba(201, 168, 108, 0.25);
+  min-width: 2rem;
 }
 
 /* ─── Grain texture overlay ──────────────── */
@@ -248,3 +300,50 @@ html.lenis body {
   box-shadow: 0 0 30px rgba(216, 155, 90, 0.25);
 }
 
+.glow-emerald {
+  box-shadow: 0 0 20px rgba(27, 59, 43, 0.4);
+}
+
+.glow-rose {
+  box-shadow: 0 0 20px rgba(48, 24, 24, 0.4);
+}
+
+/* ─── Vibrant gradient text utilities ────── */
+
+.text-gradient-sunset {
+  background: linear-gradient(135deg, var(--color-amber), var(--color-sunset));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-rose {
+  background: linear-gradient(135deg, var(--color-cream), var(--color-rose-gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Glass card component ───────────────── */
+
+.glass-card {
+  background: rgba(20, 12, 7, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(201, 168, 108, 0.18);
+  border-radius: 1.5rem;
+}
+
+.glass-card:hover {
+  border-color: rgba(216, 155, 90, 0.5);
+  box-shadow: 0 8px 32px rgba(216, 155, 90, 0.1);
+}
+
+/* ─── Dot leader for menu list view ──────── */
+
+.dot-leader {
+  flex: 1;
+  margin: 0 1rem;
+  border-bottom: 2px dotted rgba(201, 168, 108, 0.25);
+  min-width: 2rem;
+}

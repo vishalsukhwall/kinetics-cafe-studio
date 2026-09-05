@@ -27,6 +27,11 @@ const Hero = dynamic(() => import('@/components/sections/Hero'), {
   ssr: false,
 });
 
+const WhyChooseUs = dynamic(
+  () => import('@/components/sections/WhyChooseUs'),
+  { ssr: false }
+);
+
 const MenuShowcase3D = dynamic(
   () => import('@/components/sections/MenuShowcase3D'),
   { ssr: false }
@@ -91,10 +96,10 @@ export default function HomePage() {
 
           const sections = [
             { id: 'hero' as const, threshold: 0 },
-            { id: 'menu' as const, threshold: 0.2 },
-            { id: 'custom-brew' as const, threshold: 0.45 },
-            { id: 'reserve' as const, threshold: 0.72 },
-            { id: 'footer' as const, threshold: 0.95 },
+            { id: 'menu' as const, threshold: 0.15 },
+            { id: 'custom-brew' as const, threshold: 0.4 },
+            { id: 'reserve' as const, threshold: 0.65 },
+            { id: 'footer' as const, threshold: 0.93 },
           ];
 
           const active =
@@ -138,14 +143,19 @@ export default function HomePage() {
         {/* Scroll progress indicator */}
         <ScrollProgressIndicator />
 
-        {/* Streamlined, Breathing Single-Page Narrative Flow */}
+        {/* Streamlined Single-Page Narrative Flow */}
         <main>
-          {/* Chapter 1: Cinematic Hero Landing */}
+          {/* Chapter 1: Cinematic Split-Screen Hero */}
           <section id="hero" aria-label="Hero Experience">
             <Hero />
           </section>
 
-          {/* Chapter 2: The Signature Collection (Unified All-in-One Menu) */}
+          {/* Chapter 1.5: Why Kinetics — Feature Grid */}
+          <section id="why-us" aria-label="Why Choose Us">
+            <WhyChooseUs />
+          </section>
+
+          {/* Chapter 2: The Signature Collection (Grid + List View) */}
           <section id="menu" aria-label="Signature Collection">
             <MenuShowcase3D />
           </section>
@@ -155,12 +165,12 @@ export default function HomePage() {
             <CustomBrewStudio />
           </section>
 
-          {/* Chapter 4: Table Reservation & Sanctuary Atmosphere */}
+          {/* Chapter 4: Sanctuary — Gallery & Table Reservation */}
           <section id="sanctuary" aria-label="Sanctuary & Seating">
             <SanctuarySection />
           </section>
 
-          {/* Chapter 5: Minimalist Footer */}
+          {/* Chapter 5: Comprehensive Footer */}
           <footer id="footer" aria-label="Footer & Location">
             <Footer />
           </footer>
@@ -169,7 +179,7 @@ export default function HomePage() {
         {/* Floating AI Barista Taste-Match Assistant */}
         <AIBaristaModal />
 
-        {/* Mobile & Desktop Augmented Reality (AR) Desk View Modal */}
+        {/* AR Desk View Modal */}
         <ARViewerModal />
 
         {/* Slide-Up Order Drawer (INR ₹) */}
@@ -191,7 +201,7 @@ function FloatingOrderButton() {
   return (
     <button
       onClick={toggleDrawer}
-      className="btn-tactile fixed bottom-8 right-8 z-40 flex items-center gap-3 rounded-full px-6 py-3.5 font-medium transition-all bg-gradient-to-r from-[#D89B5A] to-[#B8722E] text-[#0B0705] shadow-[0_0_25px_rgba(216,155,90,0.35)] hover:shadow-[0_0_40px_rgba(216,155,90,0.65)] hover:scale-105"
+      className="btn-tactile fixed bottom-8 right-8 z-40 flex items-center gap-3 rounded-full px-6 py-3.5 font-medium transition-all bg-gradient-to-r from-[#D89B5A] to-[#FF7A00] text-[#0B0705] shadow-[0_0_25px_rgba(216,155,90,0.35)] hover:shadow-[0_0_40px_rgba(255,122,0,0.5)] hover:scale-105"
       aria-label={`Open order drawer${itemCount > 0 ? `, ${itemCount} items, ₹${totalAmount}` : ''}`}
       data-cursor="hover"
     >
@@ -212,7 +222,7 @@ function FloatingOrderButton() {
           <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
         </svg>
         {itemCount > 0 && (
-          <span className="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full text-[10px] font-bold bg-[#0B0705] text-[#D89B5A]">
+          <span className="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full text-[10px] font-bold bg-[#0B0705] text-[#FF7A00]">
             {itemCount}
           </span>
         )}

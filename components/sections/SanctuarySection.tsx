@@ -1,363 +1,383 @@
-"use client";
+'use client';
 
 import React, { useState } from 'react';
 import { useSceneStore, TableBooking } from '@/store/useSceneStore';
 
-interface Table {
-  id: string;
-  name: string;
-  zone: string;
-  capacity: number;
-  status: 'available' | 'reserved';
-  description: string;
-  x: number;
-  y: number;
-}
-
-const SANCTUARY_PHOTOS = [
-  {
-    title: 'The Slayer Espresso Bar',
-    zone: 'Zone A · Bar Counter',
-    description: 'Front-row view of 9-bar extraction & V60 slow bar',
-    imageUrl: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    title: 'Sunlit Window Canopy',
-    zone: 'Zone B · Lounge Bays',
-    description: 'Natural morning light overlooking lush Indiranagar canopies',
-    imageUrl: 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    title: 'Terrazzo Oak Garden',
-    zone: 'Zone C · Outdoor Patio',
-    description: 'Open-air teak seating shaded by silver oaks',
-    imageUrl: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80',
-  },
+const TABLES = [
+  { id: 'B1', zone: 'bar', x: 20, y: 30, seats: 2, status: 'available' },
+  { id: 'B2', zone: 'bar', x: 20, y: 50, seats: 2, status: 'available' },
+  { id: 'B3', zone: 'bar', x: 20, y: 70, seats: 2, status: 'reserved' },
+  { id: 'B4', zone: 'bar', x: 40, y: 40, seats: 2, status: 'available' },
+  { id: 'L1', zone: 'lounge', x: 60, y: 30, seats: 4, status: 'available' },
+  { id: 'L2', zone: 'lounge', x: 60, y: 70, seats: 4, status: 'available' },
+  { id: 'L3', zone: 'lounge', x: 80, y: 50, seats: 6, status: 'reserved' },
+  { id: 'W1', zone: 'window', x: 30, y: 15, seats: 2, status: 'available' },
+  { id: 'W2', zone: 'window', x: 70, y: 15, seats: 2, status: 'available' },
+  { id: 'T1', zone: 'terrace', x: 85, y: 25, seats: 4, status: 'available' },
+  { id: 'T2', zone: 'terrace', x: 85, y: 75, seats: 4, status: 'available' }
 ];
 
-const TABLES: Table[] = [
-  { id: 'B1', name: 'Bar Stool 01', zone: 'Bar Counter', capacity: 1, status: 'available', description: 'Front-row view of Slayer extraction', x: 20, y: 25 },
-  { id: 'B2', name: 'Bar Stool 02', zone: 'Bar Counter', capacity: 1, status: 'available', description: 'Direct interaction with head barista', x: 30, y: 25 },
-  { id: 'B3', name: 'Bar Stool 03', zone: 'Bar Counter', capacity: 1, status: 'reserved', description: 'Front-row view of slow bar', x: 40, y: 25 },
-  { id: 'B4', name: 'Bar Stool 04', zone: 'Bar Counter', capacity: 1, status: 'available', description: 'Kyoto cold drip view', x: 50, y: 25 },
-
-  { id: 'L1', name: 'Leather Booth 1', zone: 'Leather Booths', capacity: 4, status: 'available', description: 'Deep smoked leather with warm ambient lighting', x: 78, y: 28 },
-  { id: 'L2', name: 'Leather Booth 2', zone: 'Leather Booths', capacity: 4, status: 'reserved', description: 'Acoustic dampened corner booth', x: 78, y: 55 },
-  { id: 'L3', name: 'Leather Booth 3', zone: 'Leather Booths', capacity: 4, status: 'available', description: 'Plush seating for intimate gatherings', x: 78, y: 80 },
-
-  { id: 'W1', name: 'Window Bay 1', zone: 'Window Canopy', capacity: 2, status: 'available', description: 'Natural morning sunlight & tree view', x: 22, y: 62 },
-  { id: 'W2', name: 'Window Bay 2', zone: 'Window Canopy', capacity: 2, status: 'available', description: 'Marble table with green canopy view', x: 38, y: 62 },
-
-  { id: 'T1', name: 'Garden Table 1', zone: 'Outdoor Patio', capacity: 4, status: 'available', description: 'Open-air patio under silver oaks', x: 22, y: 88 },
-  { id: 'T2', name: 'Garden Table 2', zone: 'Outdoor Patio', capacity: 6, status: 'available', description: 'Round teak table for group tastings', x: 42, y: 88 },
-];
-
+const DATES = ['Today', 'Tomorrow', 'Weekend'];
 const TIME_SLOTS = ['8:30 AM', '11:00 AM', '2:30 PM', '5:00 PM', '7:30 PM', '9:00 PM'];
+const PARTY_SIZES = [1, 2, 4, 6];
 
 export default function SanctuarySection() {
-  const [selectedTable, setSelectedTable] = useState<Table>(TABLES[0]);
-  const [date, setDate] = useState('Today');
-  const [time, setTime] = useState('5:00 PM');
-  const [guests, setGuests] = useState(2);
+  const setBooking = useSceneStore((state) => state.setBooking);
+  
+  const [selectedTable, setSelectedTable] = useState<string | null>(null);
+  const [date, setDate] = useState(DATES[0]);
+  const [time, setTime] = useState(TIME_SLOTS[1]);
+  const [partySize, setPartySize] = useState(PARTY_SIZES[1]);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [confirmedBooking, setConfirmedBooking] = useState<TableBooking | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [confirmation, setConfirmation] = useState<string | null>(null);
 
-  const setBooking = useSceneStore((s) => s.setBooking);
-
-  const handleBook = (e: React.FormEvent) => {
+  const handleBooking = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim() || !phone.trim()) return;
-
-    const b: TableBooking = {
-      tableId: selectedTable.id,
-      tableName: selectedTable.name,
-      zone: selectedTable.zone,
-      date,
-      timeSlot: time,
-      guests,
-      guestName: name,
-      phone,
-    };
-    setConfirmedBooking(b);
-    setBooking(b);
+    if (!selectedTable || !name || !phone) return;
+    
+    setIsSubmitting(true);
+    
+    // Simulate API call
+    setTimeout(() => {
+      const bookingId = `RES-${Math.floor(1000 + Math.random() * 9000)}`;
+      const tableObj = TABLES.find(t => t.id === selectedTable);
+      
+      const newBooking: TableBooking = {
+        tableId: selectedTable,
+        tableName: `Table ${selectedTable}`,
+        zone: tableObj ? tableObj.zone.toUpperCase() : 'MAIN',
+        date,
+        timeSlot: time,
+        guests: partySize,
+        guestName: name,
+        phone,
+      };
+      
+      setBooking(newBooking);
+      setConfirmation(bookingId);
+      setIsSubmitting(false);
+    }, 800);
   };
 
   return (
-    <section
-      id="sanctuary"
-      className="relative min-h-screen w-full bg-[#0C0603] py-32 px-6 sm:px-8 lg:px-12 text-[#F5E6D0]"
-    >
-      <div className="max-w-7xl mx-auto">
+    <section className="bg-[#0E0704] py-32 px-6 sm:px-8 lg:px-12 w-full">
+      <div className="max-w-7xl mx-auto flex flex-col">
         
-        {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-20">
-          <span className="text-[11px] font-mono uppercase tracking-[0.35em] text-[#D89B5A] block mb-3">
-            03 · Sanctuary & Atmosphere
+        {/* Header */}
+        <div className="mb-16">
+          <span className="text-[11px] font-mono text-[#D89B5A] tracking-[0.2em] uppercase block mb-4">
+            04 &middot; SANCTUARY &amp; ATMOSPHERE
           </span>
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-serif tracking-[0.16em] uppercase text-[#F5E6D0]">
-            Reserve Your Spot
-          </h2>
-          <p className="mt-4 text-xs sm:text-sm text-[#C9A86C]/70 font-light leading-relaxed">
-            Experience our Indiranagar sanctuary. Select your preferred atmosphere before arriving.
+          <h2 className="text-5xl sm:text-6xl font-serif text-[#F5E6D0] mb-6">Our Space</h2>
+          <p className="text-[#F5E6D0]/60 text-lg max-w-2xl">
+            Experience the flagship sanctuary. A multi-sensory environment designed to elevate your coffee journey, featuring organic textures, warm amber light, and dedicated slow brew bars.
           </p>
         </div>
 
-        {/* 1. Cafe Atmosphere Highlights (3 Clean Cards) */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
-          {SANCTUARY_PHOTOS.map((photo, i) => (
-            <div
-              key={i}
-              className="group relative h-72 rounded-3xl overflow-hidden border border-[#C9A86C]/20 bg-[#160D08]"
-            >
-              <img
-                src={photo.imageUrl}
-                alt={photo.title}
-                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 opacity-80 group-hover:opacity-100"
-                loading="lazy"
+        {/* PART 1: Immersive Gallery */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
+          <div className="lg:col-span-2 h-80 rounded-2xl overflow-hidden border border-[#C9A86C]/20 group relative hover:border-[#1B3B2B]/60 transition-colors duration-500">
+            <img 
+              src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80" 
+              alt="The Slayer Espresso Bar"
+              className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0B0705] via-transparent to-transparent opacity-90"></div>
+            <div className="absolute bottom-6 left-6">
+              <span className="text-[10px] font-mono text-[#D89B5A] uppercase tracking-wider mb-2 block">Zone 01</span>
+              <h3 className="text-2xl font-serif text-[#F5E6D0]">The Slayer Espresso Bar</h3>
+            </div>
+          </div>
+          
+          <div className="flex flex-col gap-6">
+            <div className="h-[152px] rounded-2xl overflow-hidden border border-[#C9A86C]/20 group relative">
+              <img 
+                src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=800&q=80" 
+                alt="Sunlit Window Canopy"
+                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0B0705]/95 via-[#0B0705]/30 to-transparent" />
-              
-              <div className="absolute bottom-6 left-6 right-6">
-                <span className="text-[10px] font-mono text-[#D89B5A] uppercase tracking-widest block mb-1">
-                  {photo.zone}
-                </span>
-                <h3 className="text-xl font-serif text-[#F5E6D0] mb-1">{photo.title}</h3>
-                <p className="text-xs text-[#F5E6D0]/70 font-light">{photo.description}</p>
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0B0705]/80 via-transparent to-transparent opacity-90"></div>
+              <div className="absolute bottom-4 left-4">
+                <h3 className="text-lg font-serif text-[#F5E6D0]">Sunlit Canopy</h3>
               </div>
             </div>
-          ))}
+            <div className="h-[152px] rounded-2xl overflow-hidden border border-[#C9A86C]/20 group relative">
+              <img 
+                src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80" 
+                alt="Terrazzo Oak Garden"
+                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0B0705]/80 via-transparent to-transparent opacity-90"></div>
+              <div className="absolute bottom-4 left-4">
+                <h3 className="text-lg font-serif text-[#F5E6D0]">Terrazzo Garden</h3>
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* 2. Interactive Floor Plan & Reservation Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+        {/* PART 2: Table Reservation */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mt-10">
           
-          {/* Left: Spatial Architectural Floor Map */}
-          <div className="lg:col-span-7 bg-[#140C07]/70 border border-[#C9A86C]/20 rounded-3xl p-6 sm:p-8 backdrop-blur-md">
-            <div className="flex justify-between items-center mb-6">
-              <div>
-                <h3 className="text-lg font-serif text-[#F5E6D0]">Interactive Seating Map</h3>
-                <span className="text-[10px] font-mono text-[#C9A86C]/70 uppercase tracking-widest">
-                  Tap any available table to select
-                </span>
-              </div>
+          {/* Floor Map */}
+          <div className="lg:col-span-7 bg-[#140C07] rounded-3xl p-8 border border-[#C9A86C]/20 relative overflow-hidden">
+            <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9InJnYmEoMjAxLCAxNjgsIDEwOCwgMC4wNSkiLz48L3N2Zz4=')] opacity-50"></div>
+            
+            <div className="relative h-[450px] w-full bg-[#0B0705]/50 rounded-2xl border border-[#C9A86C]/10 mb-6">
+              {/* Zones */}
+              <div className="absolute top-4 left-4 text-[10px] font-mono text-[#F5E6D0]/40 uppercase">Espresso Bar</div>
+              <div className="absolute bottom-4 left-4 text-[10px] font-mono text-[#F5E6D0]/40 uppercase">Lounge</div>
+              <div className="absolute top-4 right-4 text-[10px] font-mono text-[#F5E6D0]/40 uppercase">Terrace</div>
+              <div className="absolute bottom-4 right-4 text-[10px] font-mono text-[#F5E6D0]/40 uppercase">Roastery View</div>
 
-              {/* Legend */}
-              <div className="flex items-center gap-3 text-[10px] font-mono uppercase">
-                <div className="flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#D89B5A]" />
-                  <span className="text-[#F5E6D0]">Selected</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#2A180E] border border-[#C9A86C]/30" />
-                  <span className="text-[#F5E6D0]/60">Available</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Spatial Layout Canvas */}
-            <div className="relative w-full h-96 sm:h-[420px] bg-[#0A0503] border border-[#24150E] rounded-2xl p-4 select-none overflow-hidden">
-              <div
-                className="absolute inset-0 opacity-10 pointer-events-none"
-                style={{
-                  backgroundImage: 'linear-gradient(#C9A86C 1px, transparent 1px), linear-gradient(90deg, #C9A86C 1px, transparent 1px)',
-                  backgroundSize: '36px 36px',
-                }}
-              />
-
-              <div className="absolute top-3 left-4 text-[9px] font-mono text-[#D89B5A]/50 uppercase tracking-widest">
-                [Zone A: Espresso Bar]
-              </div>
-              <div className="absolute top-3 right-4 text-[9px] font-mono text-[#D89B5A]/50 uppercase tracking-widest">
-                [Zone B: Booths]
-              </div>
-              <div className="absolute bottom-3 left-4 text-[9px] font-mono text-[#D89B5A]/50 uppercase tracking-widest">
-                [Zone C: Garden Patio]
-              </div>
-
-              {/* Espresso bar counter */}
-              <div className="absolute top-12 left-8 w-44 h-3.5 bg-[#20120B] border border-[#C9A86C]/30 rounded flex items-center justify-center">
-                <span className="text-[7px] font-mono text-[#C9A86C]/70 uppercase tracking-widest">Slayer Bar</span>
-              </div>
-
-              {/* Interactive Table Pins */}
-              {TABLES.map((t) => {
-                const isSelected = selectedTable.id === t.id;
-                const isReserved = t.status === 'reserved';
+              {/* Tables */}
+              {TABLES.map(table => {
+                const isSelected = selectedTable === table.id;
+                const isReserved = table.status === 'reserved';
+                
+                let bgColor = 'bg-[#1C1009]';
+                let borderColor = 'border-[#C9A86C]/30';
+                
+                if (isSelected) {
+                  bgColor = 'bg-[#D89B5A]';
+                  borderColor = 'border-[#D89B5A]';
+                } else if (isReserved) {
+                  bgColor = 'bg-red-950/20';
+                  borderColor = 'border-red-900/30';
+                }
 
                 return (
                   <button
-                    key={t.id}
-                    onClick={() => !isReserved && setSelectedTable(t)}
+                    key={table.id}
                     disabled={isReserved}
-                    style={{ left: `${t.x}%`, top: `${t.y}%` }}
-                    className={`absolute -translate-x-1/2 -translate-y-1/2 rounded-xl flex flex-col items-center justify-center transition-all ${
-                      t.capacity === 1 ? 'w-9 h-9 rounded-full' : t.capacity === 2 ? 'w-11 h-11' : 'w-14 h-12'
-                    } ${
-                      isSelected
-                        ? 'bg-[#D89B5A] text-[#0B0705] font-bold shadow-[0_0_15px_rgba(216,155,90,0.8)] scale-105 z-10'
-                        : isReserved
-                        ? 'bg-red-950/20 border border-red-900/30 text-red-400/40 opacity-40 cursor-not-allowed'
-                        : 'bg-[#1C1009] border border-[#C9A86C]/30 text-[#F5E6D0] hover:border-[#D89B5A]'
-                    }`}
+                    onClick={() => setSelectedTable(table.id)}
+                    className={`absolute flex items-center justify-center rounded-full transition-all duration-300 ${bgColor} border ${borderColor} ${
+                      !isReserved && !isSelected ? 'hover:border-[#D89B5A]/60' : ''
+                    } ${isSelected ? 'shadow-[0_0_15px_rgba(216,155,90,0.4)] text-[#0B0705]' : 'text-[#F5E6D0]/60'}`}
+                    style={{ 
+                      left: `${table.x}%`, 
+                      top: `${table.y}%`,
+                      width: table.seats > 2 ? '48px' : '36px',
+                      height: table.seats > 2 ? '48px' : '36px',
+                      transform: 'translate(-50%, -50%)',
+                      cursor: isReserved ? 'not-allowed' : 'pointer'
+                    }}
                   >
-                    <span className="text-[10px] font-mono">{t.id}</span>
-                    <span className="text-[8px] opacity-75">{t.capacity}p</span>
+                    <span className="text-[10px] font-mono font-medium">{table.id}</span>
                   </button>
                 );
               })}
             </div>
-
-            {/* Selected Spot Details */}
-            <div className="mt-5 p-4 rounded-2xl bg-[#0A0503] border border-[#20120B] flex justify-between items-center text-xs">
-              <div>
-                <span className="font-serif text-[#D89B5A] font-bold block">
-                  {selectedTable.name} · {selectedTable.zone}
-                </span>
-                <span className="text-[#F5E6D0]/60 text-[11px] font-light">
-                  {selectedTable.description} (Up to {selectedTable.capacity} guests)
-                </span>
+            
+            <div className="flex gap-6 justify-center">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-[#1C1009] border border-[#C9A86C]/30"></div>
+                <span className="text-xs font-mono text-[#F5E6D0]/60">Available</span>
               </div>
-              <span className="px-3 py-1 rounded-full text-[10px] font-mono uppercase bg-[#D89B5A]/20 text-[#D89B5A]">
-                Selected
-              </span>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-[#D89B5A]"></div>
+                <span className="text-xs font-mono text-[#F5E6D0]/60">Selected</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-red-950/20 border border-red-900/30"></div>
+                <span className="text-xs font-mono text-[#F5E6D0]/60">Reserved</span>
+              </div>
             </div>
-
           </div>
 
-          {/* Right: Booking Details Card */}
-          <div className="lg:col-span-5 bg-[#140C07]/70 border border-[#C9A86C]/20 rounded-3xl p-6 sm:p-8 backdrop-blur-md">
-            <h3 className="text-xl font-serif text-[#F5E6D0] mb-6">Reservation Details</h3>
-
-            <form onSubmit={handleBook} className="space-y-5">
-              
-              {/* Date */}
-              <div>
-                <label className="text-[10px] font-mono uppercase tracking-widest text-[#C9A86C]/70 block mb-2">
-                  Date
-                </label>
-                <div className="grid grid-cols-3 gap-2">
-                  {['Today', 'Tomorrow', 'Weekend'].map((d) => (
-                    <button
-                      type="button"
-                      key={d}
-                      onClick={() => setDate(d)}
-                      className={`py-2 rounded-xl text-xs font-medium border transition-all ${
-                        date === d
-                          ? 'border-[#D89B5A] bg-[#24150D] text-[#D89B5A]'
-                          : 'border-[#24150E] text-[#F5E6D0]/60 hover:border-[#C9A86C]/30'
-                      }`}
-                    >
-                      {d}
-                    </button>
-                  ))}
+          {/* Booking Form */}
+          <div className="lg:col-span-5 flex flex-col justify-center">
+            {confirmation ? (
+              <div className="bg-[#140C07] rounded-3xl p-8 border border-[#D89B5A]/30 text-center flex flex-col items-center">
+                <div className="w-16 h-16 bg-[#D89B5A]/10 rounded-full flex items-center justify-center mb-6 border border-[#D89B5A]/30">
+                  <svg className="w-8 h-8 text-[#D89B5A]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
                 </div>
-              </div>
-
-              {/* Time Slots */}
-              <div>
-                <label className="text-[10px] font-mono uppercase tracking-widest text-[#C9A86C]/70 block mb-2">
-                  Time Slot (IST)
-                </label>
-                <div className="grid grid-cols-3 gap-2">
-                  {TIME_SLOTS.map((t) => (
-                    <button
-                      type="button"
-                      key={t}
-                      onClick={() => setTime(t)}
-                      className={`py-2 rounded-xl text-xs font-mono border transition-all ${
-                        time === t
-                          ? 'border-[#D89B5A] bg-[#24150D] text-[#D89B5A]'
-                          : 'border-[#24150E] text-[#F5E6D0]/60 hover:border-[#C9A86C]/30'
-                      }`}
-                    >
-                      {t}
-                    </button>
-                  ))}
+                <h3 className="text-2xl font-serif text-[#F5E6D0] mb-2">Sanctuary Secured</h3>
+                <p className="text-[#F5E6D0]/60 mb-8">We look forward to hosting you, {name}.</p>
+                <div className="bg-[#0B0705] p-6 rounded-xl border border-[#C9A86C]/10 w-full mb-8">
+                  <div className="flex justify-between mb-4 border-b border-[#1A1210] pb-4">
+                    <span className="font-mono text-[#F5E6D0]/40 text-sm">TOKEN</span>
+                    <span className="font-mono text-[#D89B5A] text-sm font-bold">{confirmation}</span>
+                  </div>
+                  <div className="flex justify-between mb-2">
+                    <span className="font-mono text-[#F5E6D0]/40 text-xs">TABLE</span>
+                    <span className="font-mono text-[#F5E6D0] text-xs">{selectedTable}</span>
+                  </div>
+                  <div className="flex justify-between mb-2">
+                    <span className="font-mono text-[#F5E6D0]/40 text-xs">TIME</span>
+                    <span className="font-mono text-[#F5E6D0] text-xs">{date}, {time}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-mono text-[#F5E6D0]/40 text-xs">GUESTS</span>
+                    <span className="font-mono text-[#F5E6D0] text-xs">{partySize}</span>
+                  </div>
                 </div>
+                <button 
+                  onClick={() => {
+                    setConfirmation(null);
+                    setSelectedTable(null);
+                    setName('');
+                    setPhone('');
+                  }}
+                  className="w-full py-3 rounded-xl border border-[#C9A86C]/30 text-[#F5E6D0] font-medium text-sm transition-all hover:bg-[#F5E6D0]/5"
+                >
+                  Book Another Table
+                </button>
               </div>
-
-              {/* Party Size */}
-              <div>
-                <label className="text-[10px] font-mono uppercase tracking-widest text-[#C9A86C]/70 block mb-2">
-                  Party Size
-                </label>
-                <div className="flex gap-2">
-                  {[1, 2, 4, 6].map((num) => (
-                    <button
-                      type="button"
-                      key={num}
-                      onClick={() => setGuests(num)}
-                      className={`flex-1 py-2 rounded-xl text-xs font-mono border transition-all ${
-                        guests === num
-                          ? 'border-[#D89B5A] bg-[#24150D] text-[#D89B5A]'
-                          : 'border-[#24150E] text-[#F5E6D0]/60 hover:border-[#C9A86C]/30'
-                      }`}
-                    >
-                      {num} {num === 1 ? 'Guest' : 'Guests'}
-                    </button>
-                  ))}
+            ) : (
+              <form onSubmit={handleBooking} className="flex flex-col gap-6">
+                <div>
+                  <h3 className="text-3xl font-serif text-[#F5E6D0] mb-2">Reserve a Table</h3>
+                  <p className="text-[#F5E6D0]/50 text-sm">Select your preferred setting in our immersive space.</p>
                 </div>
-              </div>
 
-              {/* Name & Phone */}
-              <div className="space-y-3">
-                <input
-                  type="text"
-                  required
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="Your Name"
-                  className="w-full bg-[#0A0503] border border-[#24150E] rounded-xl px-4 py-3 text-xs sm:text-sm text-[#F5E6D0] placeholder-[#F5E6D0]/30 focus:outline-none focus:border-[#D89B5A]"
-                />
-                <input
-                  type="tel"
-                  required
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  placeholder="Mobile / WhatsApp (+91)"
-                  className="w-full bg-[#0A0503] border border-[#24150E] rounded-xl px-4 py-3 text-xs sm:text-sm text-[#F5E6D0] placeholder-[#F5E6D0]/30 focus:outline-none focus:border-[#D89B5A]"
-                />
-              </div>
+                {/* Date Selection */}
+                <div>
+                  <label className="flex items-center gap-2 text-xs font-mono text-[#D89B5A] uppercase mb-3">
+                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                      <line x1="16" y1="2" x2="16" y2="6" />
+                      <line x1="8" y1="2" x2="8" y2="6" />
+                      <line x1="3" y1="10" x2="21" y2="10" />
+                    </svg>
+                    Date
+                  </label>
+                  <div className="flex gap-3">
+                    {DATES.map(d => (
+                      <button
+                        key={d}
+                        type="button"
+                        onClick={() => setDate(d)}
+                        className={`flex-1 py-2.5 rounded-lg text-sm transition-colors border ${
+                          date === d 
+                            ? 'bg-[#D89B5A]/10 border-[#D89B5A] text-[#D89B5A]' 
+                            : 'bg-[#140C07] border-[#C9A86C]/20 text-[#F5E6D0]/60 hover:border-[#C9A86C]/50'
+                        }`}
+                      >
+                        {d}
+                      </button>
+                    ))}
+                  </div>
+                </div>
 
-              <button
-                type="submit"
-                className="btn-tactile w-full py-3.5 rounded-2xl bg-gradient-to-r from-[#D89B5A] to-[#B8722E] text-[#0B0705] font-semibold uppercase tracking-[0.16em] text-xs shadow-lg hover:brightness-110 transition-all"
-              >
-                Confirm Spot at {selectedTable.name}
-              </button>
+                {/* Time Selection */}
+                <div>
+                  <label className="flex items-center gap-2 text-xs font-mono text-[#D89B5A] uppercase mb-3">
+                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                      <circle cx="12" cy="12" r="10" />
+                      <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                    Time
+                  </label>
+                  <div className="grid grid-cols-3 gap-3">
+                    {TIME_SLOTS.map(t => (
+                      <button
+                        key={t}
+                        type="button"
+                        onClick={() => setTime(t)}
+                        className={`py-2 rounded-lg text-sm font-mono transition-colors border ${
+                          time === t 
+                            ? 'bg-[#D89B5A]/10 border-[#D89B5A] text-[#D89B5A]' 
+                            : 'bg-[#140C07] border-[#C9A86C]/20 text-[#F5E6D0]/60 hover:border-[#C9A86C]/50'
+                        }`}
+                      >
+                        {t}
+                      </button>
+                    ))}
+                  </div>
+                </div>
 
-            </form>
+                {/* Party Size */}
+                <div>
+                  <label className="flex items-center gap-2 text-xs font-mono text-[#D89B5A] uppercase mb-3">
+                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                      <circle cx="9" cy="7" r="4" />
+                      <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                    </svg>
+                    Party Size
+                  </label>
+                  <div className="flex gap-3">
+                    {PARTY_SIZES.map(s => (
+                      <button
+                        key={s}
+                        type="button"
+                        onClick={() => setPartySize(s)}
+                        className={`flex-1 py-2.5 rounded-lg text-sm font-mono transition-colors border ${
+                          partySize === s 
+                            ? 'bg-[#D89B5A]/10 border-[#D89B5A] text-[#D89B5A]' 
+                            : 'bg-[#140C07] border-[#C9A86C]/20 text-[#F5E6D0]/60 hover:border-[#C9A86C]/50'
+                        }`}
+                      >
+                        {s}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Details */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="flex items-center gap-2 text-xs font-mono text-[#D89B5A] uppercase mb-3">
+                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                      </svg>
+                      Name
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className="w-full bg-[#140C07] border border-[#C9A86C]/20 rounded-lg px-4 py-2.5 text-[#F5E6D0] text-sm focus:outline-none focus:border-[#D89B5A] transition-colors"
+                      placeholder="Your Name"
+                    />
+                  </div>
+                  <div>
+                    <label className="flex items-center gap-2 text-xs font-mono text-[#D89B5A] uppercase mb-3">
+                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                      </svg>
+                      Phone
+                    </label>
+                    <input
+                      type="tel"
+                      required
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      className="w-full bg-[#140C07] border border-[#C9A86C]/20 rounded-lg px-4 py-2.5 text-[#F5E6D0] text-sm focus:outline-none focus:border-[#D89B5A] transition-colors"
+                      placeholder="+91..."
+                    />
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={!selectedTable || !name || !phone || isSubmitting}
+                  className={`w-full py-4 rounded-xl font-medium text-sm transition-all mt-4 ${
+                    !selectedTable || !name || !phone 
+                      ? 'bg-[#1A1210] text-[#F5E6D0]/30 cursor-not-allowed'
+                      : 'bg-[#D89B5A] text-[#0B0705] hover:bg-[#F5E6D0]'
+                  }`}
+                >
+                  {isSubmitting 
+                    ? 'Confirming...' 
+                    : !selectedTable 
+                      ? 'Select a Table on Map' 
+                      : `Confirm Table ${selectedTable} \u2014 ${date}, ${time}`
+                  }
+                </button>
+              </form>
+            )}
           </div>
-
         </div>
 
       </div>
-
-      {/* Confirmation Modal */}
-      {confirmedBooking && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#0B0705]/90 backdrop-blur-md p-4">
-          <div className="max-w-sm w-full bg-[#140C07] border border-[#D89B5A] rounded-3xl p-7 shadow-2xl text-center animate-fade-in-up">
-            <div className="w-12 h-12 rounded-full bg-[#D89B5A]/20 text-[#D89B5A] mx-auto flex items-center justify-center mb-3">
-              ✓
-            </div>
-            <h3 className="text-xl font-serif text-[#F5E6D0]">Spot Reserved</h3>
-            <p className="text-[11px] font-mono text-[#D89B5A] mt-1 mb-5">#RES-{Math.floor(1000 + Math.random() * 9000)}</p>
-            <div className="text-xs font-mono text-[#F5E6D0]/70 space-y-1.5 text-left bg-[#0A0503] p-3 rounded-xl border border-[#20120B] mb-5">
-              <div>Table: {confirmedBooking.tableName}</div>
-              <div>Time: {confirmedBooking.date} at {confirmedBooking.timeSlot}</div>
-              <div>Guest: {confirmedBooking.guestName} ({confirmedBooking.guests}p)</div>
-            </div>
-            <button
-              onClick={() => setConfirmedBooking(null)}
-              className="btn-tactile w-full py-2.5 rounded-xl bg-[#D89B5A] text-[#0B0705] font-semibold text-xs uppercase tracking-wider"
-            >
-              Done
-            </button>
-          </div>
-        </div>
-      )}
-
     </section>
   );
 }
