@@ -86,11 +86,11 @@ export default function TableReservation() {
   return (
     <section
       id="reserve"
-      className="relative min-h-screen w-full bg-[#0E0704] py-24 px-4 sm:px-6 lg:px-8 text-[#F5E6D0]"
+      className="relative min-h-screen w-full bg-[#FBF9F5] text-[#2B2421] py-28 px-4 sm:px-6 lg:px-8 font-sans transition-colors duration-700"
     >
       {/* Ambient background glow */}
       <div
-        className="absolute top-1/3 right-1/4 w-[700px] h-[500px] bg-[#D89B5A]/5 rounded-full blur-[160px] pointer-events-none"
+        className="absolute top-1/3 right-1/4 w-[700px] h-[500px] bg-[#A8583B]/5 rounded-full blur-[160px] pointer-events-none"
         aria-hidden="true"
       />
 
@@ -98,13 +98,13 @@ export default function TableReservation() {
         
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="text-xs uppercase tracking-[0.35em] text-[#D89B5A] font-light">
+          <span className="text-xs uppercase tracking-[0.3em] text-[#A8583B] font-semibold block mb-2">
             Sanctuary Seating
           </span>
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-serif tracking-[0.18em] uppercase text-[#F5E6D0] mt-3">
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-serif tracking-wide uppercase text-[#2B2421] mt-3">
             Reserve Your Spot
           </h2>
-          <p className="mt-3 text-sm sm:text-base text-[#C9A86C]/80 font-light leading-relaxed">
+          <p className="mt-3 text-sm sm:text-base text-[#5A5049] font-light leading-relaxed">
             Select your preferred aesthetic sanctuary—from front-row Slayer barista stools to shaded outdoor terrazzo gardens.
           </p>
         </div>
@@ -113,11 +113,11 @@ export default function TableReservation() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           
           {/* Left Column: Visual Architectural Floor Map */}
-          <div className="lg:col-span-7 bg-[#160D08]/90 border border-[#C9A86C]/30 rounded-3xl p-6 sm:p-8 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.8)]">
+          <div className="lg:col-span-7 bg-[#F2EDE4] border border-[#2B2421]/15 rounded-3xl p-6 sm:p-8 backdrop-blur-2xl shadow-sm">
             <div className="flex justify-between items-center mb-6">
               <div>
-                <h3 className="text-lg font-serif text-[#F5E6D0]">Cafe Floor Map</h3>
-                <span className="text-[11px] font-mono text-[#C9A86C]/70 uppercase tracking-wider">
+                <h3 className="text-lg font-serif text-[#2B2421]">Cafe Floor Map</h3>
+                <span className="text-[11px] font-mono text-[#5A5049] uppercase tracking-wider font-medium">
                   Indiranagar Flagship · Ground Level
                 </span>
               </div>
@@ -125,50 +125,50 @@ export default function TableReservation() {
               {/* Legend */}
               <div className="flex items-center gap-4 text-[10px] font-mono uppercase tracking-wider">
                 <div className="flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#D89B5A]" />
-                  <span className="text-[#F5E6D0]">Selected</span>
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#A8583B]" />
+                  <span className="text-[#2B2421] font-medium">Selected</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#3D2517] border border-[#C9A86C]/40" />
-                  <span className="text-[#F5E6D0]/60">Available</span>
+                  <span className="w-2.5 h-2.5 rounded-full bg-white border border-[#2B2421]/20 shadow-sm" />
+                  <span className="text-[#5A5049]">Available</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-red-950 border border-red-800/40" />
-                  <span className="text-[#F5E6D0]/40">Reserved</span>
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#2B2421]/10 border border-[#2B2421]/15 opacity-60" />
+                  <span className="text-[#5A5049]/60">Reserved</span>
                 </div>
               </div>
             </div>
 
             {/* Spatial Architectural Layout Canvas Area */}
-            <div className="relative w-full h-[440px] sm:h-[480px] bg-[#0B0604] border border-[#2A180E] rounded-2xl overflow-hidden p-4 select-none">
+            <div className="relative w-full h-[440px] sm:h-[480px] bg-white/70 border border-[#2B2421]/15 rounded-2xl overflow-hidden p-4 select-none shadow-sm">
               
               {/* Floor grid pattern */}
               <div
-                className="absolute inset-0 opacity-15 pointer-events-none"
+                className="absolute inset-0 opacity-10 pointer-events-none"
                 style={{
                   backgroundImage:
-                    'linear-gradient(#C9A86C 1px, transparent 1px), linear-gradient(90deg, #C9A86C 1px, transparent 1px)',
+                    'linear-gradient(#2B2421 1px, transparent 1px), linear-gradient(90deg, #2B2421 1px, transparent 1px)',
                   backgroundSize: '40px 40px',
                 }}
               />
 
               {/* Architectural Zone Labels */}
-              <div className="absolute top-3 left-4 text-[10px] font-mono text-[#D89B5A]/60 uppercase tracking-widest">
+              <div className="absolute top-3 left-4 text-[10px] font-mono text-[#A8583B] uppercase tracking-widest font-semibold">
                 [Zone A: Espresso & Slow Bar]
               </div>
-              <div className="absolute top-3 right-4 text-[10px] font-mono text-[#D89B5A]/60 uppercase tracking-widest">
+              <div className="absolute top-3 right-4 text-[10px] font-mono text-[#A8583B] uppercase tracking-widest font-semibold">
                 [Zone B: Leather Booths]
               </div>
-              <div className="absolute top-[52%] left-4 text-[10px] font-mono text-[#D89B5A]/60 uppercase tracking-widest">
+              <div className="absolute top-[52%] left-4 text-[10px] font-mono text-[#A8583B] uppercase tracking-widest font-semibold">
                 [Zone C: Canopy Windows]
               </div>
-              <div className="absolute bottom-3 left-4 text-[10px] font-mono text-[#D89B5A]/60 uppercase tracking-widest">
+              <div className="absolute bottom-3 left-4 text-[10px] font-mono text-[#A8583B] uppercase tracking-widest font-semibold">
                 [Zone D: Outdoor Terrazzo Garden]
               </div>
 
               {/* Espresso Counter Graphic */}
-              <div className="absolute top-14 left-10 w-[42%] h-4 bg-[#2A180E] border border-[#C9A86C]/40 rounded-md flex items-center justify-center">
-                <span className="text-[8px] font-mono uppercase text-[#C9A86C]/80 tracking-widest">
+              <div className="absolute top-14 left-10 w-[42%] h-4 bg-[#F2EDE4] border border-[#2B2421]/15 rounded-md flex items-center justify-center shadow-sm">
+                <span className="text-[8px] font-mono uppercase text-[#5A5049] tracking-widest font-semibold">
                   Brew Bar & Slayer Machine
                 </span>
               </div>
@@ -192,30 +192,30 @@ export default function TableReservation() {
                         : 'w-16 h-14'
                     } ${
                       isSelected
-                        ? 'bg-[#D89B5A] text-[#0B0705] font-bold shadow-[0_0_20px_rgba(216,155,90,0.8)] scale-110 z-20'
+                        ? 'bg-[#A8583B] text-white font-bold shadow-md scale-110 z-20 ring-2 ring-[#A8583B]/30'
                         : isReserved
-                        ? 'bg-red-950/40 border border-red-900/40 text-red-400/40 opacity-50'
-                        : 'bg-[#2A180E]/90 border border-[#C9A86C]/40 text-[#F5E6D0] hover:border-[#D89B5A] hover:scale-105'
+                        ? 'bg-[#2B2421]/10 border border-[#2B2421]/15 text-[#2B2421]/30 opacity-50'
+                        : 'bg-white border border-[#2B2421]/20 text-[#2B2421] hover:border-[#A8583B] hover:scale-105 shadow-sm'
                     }`}
                   >
-                    <span className="text-[11px] font-mono">{tbl.id}</span>
-                    <span className="text-[9px] opacity-75">{tbl.capacity}p</span>
+                    <span className="text-[11px] font-mono font-bold">{tbl.id}</span>
+                    <span className="text-[9px] opacity-75 font-mono">{tbl.capacity}p</span>
                   </button>
                 );
               })}
             </div>
 
             {/* Selected Spot Details Badge */}
-            <div className="mt-6 p-4 rounded-2xl bg-[#0B0604]/80 border border-[#2A180E] flex justify-between items-center">
+            <div className="mt-6 p-4 rounded-2xl bg-white border border-[#2B2421]/15 flex justify-between items-center shadow-sm">
               <div>
-                <span className="text-xs font-serif text-[#D89B5A] font-bold block">
+                <span className="text-xs font-serif text-[#2B2421] font-bold block">
                   {selectedTable.name} · {selectedTable.zone}
                 </span>
-                <p className="text-[11px] text-[#F5E6D0]/70 font-light mt-0.5">
+                <p className="text-[11px] text-[#5A5049] font-light mt-0.5">
                   {selectedTable.description} · Accommodates up to {selectedTable.capacity} guests
                 </p>
               </div>
-              <span className="px-3 py-1 rounded-full text-[10px] font-mono uppercase bg-[#D89B5A]/20 text-[#D89B5A] border border-[#D89B5A]/40">
+              <span className="px-3 py-1 rounded-full text-[10px] font-mono uppercase bg-[#A8583B]/10 text-[#A8583B] border border-[#A8583B]/30 font-semibold">
                 Selected
               </span>
             </div>
@@ -223,14 +223,14 @@ export default function TableReservation() {
           </div>
 
           {/* Right Column: Reservation Form */}
-          <div className="lg:col-span-5 bg-[#160D08]/90 border border-[#C9A86C]/30 rounded-3xl p-6 sm:p-8 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.8)]">
-            <h3 className="text-xl font-serif text-[#F5E6D0] mb-6">Booking Details</h3>
+          <div className="lg:col-span-5 bg-[#F2EDE4] border border-[#2B2421]/15 rounded-3xl p-6 sm:p-8 backdrop-blur-2xl shadow-sm">
+            <h3 className="text-xl font-serif text-[#2B2421] mb-6 font-bold">Booking Details</h3>
 
             <form onSubmit={handleConfirmReservation} className="space-y-6">
               
               {/* Date Selection */}
               <div>
-                <label className="text-[11px] font-mono uppercase tracking-widest text-[#C9A86C]/80 block mb-2">
+                <label className="text-[11px] font-mono uppercase tracking-widest text-[#5A5049] block mb-2 font-semibold">
                   Select Date
                 </label>
                 <div className="grid grid-cols-3 gap-2">
@@ -239,10 +239,10 @@ export default function TableReservation() {
                       type="button"
                       key={d}
                       onClick={() => setSelectedDate(d)}
-                      className={`py-2 px-3 rounded-xl text-xs font-medium border transition-all ${
+                      className={`py-2 px-3 rounded-xl text-xs font-medium border transition-all cursor-pointer ${
                         selectedDate === d
-                          ? 'border-[#D89B5A] bg-[#2A180E] text-[#F5E6D0]'
-                          : 'border-[#2A180E] bg-[#0B0604]/60 text-[#F5E6D0]/60 hover:border-[#C9A86C]/40'
+                          ? 'border-[#A8583B] bg-white text-[#2B2421] shadow-sm font-semibold'
+                          : 'border-[#2B2421]/15 bg-transparent text-[#5A5049] hover:border-[#A8583B]/50 hover:bg-white/50'
                       }`}
                     >
                       {d}
@@ -253,7 +253,7 @@ export default function TableReservation() {
 
               {/* Time Slot Selection */}
               <div>
-                <label className="text-[11px] font-mono uppercase tracking-widest text-[#C9A86C]/80 block mb-2">
+                <label className="text-[11px] font-mono uppercase tracking-widest text-[#5A5049] block mb-2 font-semibold">
                   Time Slot (IST)
                 </label>
                 <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
@@ -262,10 +262,10 @@ export default function TableReservation() {
                       type="button"
                       key={t}
                       onClick={() => setSelectedTime(t)}
-                      className={`py-2 px-2.5 rounded-xl text-[11px] font-mono border transition-all ${
+                      className={`py-2 px-2.5 rounded-xl text-[11px] font-mono border transition-all cursor-pointer ${
                         selectedTime === t
-                          ? 'border-[#D89B5A] bg-[#2A180E] text-[#D89B5A]'
-                          : 'border-[#2A180E] bg-[#0B0604]/60 text-[#F5E6D0]/60 hover:border-[#C9A86C]/40'
+                          ? 'border-[#A8583B] bg-white text-[#A8583B] shadow-sm font-semibold'
+                          : 'border-[#2B2421]/15 bg-transparent text-[#5A5049] hover:border-[#A8583B]/50 hover:bg-white/50'
                       }`}
                     >
                       {t}
@@ -276,7 +276,7 @@ export default function TableReservation() {
 
               {/* Number of Guests */}
               <div>
-                <label className="text-[11px] font-mono uppercase tracking-widest text-[#C9A86C]/80 block mb-2">
+                <label className="text-[11px] font-mono uppercase tracking-widest text-[#5A5049] block mb-2 font-semibold">
                   Party Size
                 </label>
                 <div className="flex gap-3">
@@ -285,10 +285,10 @@ export default function TableReservation() {
                       type="button"
                       key={num}
                       onClick={() => setGuests(num)}
-                      className={`flex-1 py-2 rounded-xl text-xs font-mono border transition-all ${
+                      className={`flex-1 py-2 rounded-xl text-xs font-mono border transition-all cursor-pointer ${
                         guests === num
-                          ? 'border-[#D89B5A] bg-[#2A180E] text-[#D89B5A]'
-                          : 'border-[#2A180E] bg-[#0B0604]/60 text-[#F5E6D0]/60 hover:border-[#C9A86C]/40'
+                          ? 'border-[#A8583B] bg-white text-[#A8583B] shadow-sm font-semibold'
+                          : 'border-[#2B2421]/15 bg-transparent text-[#5A5049] hover:border-[#A8583B]/50 hover:bg-white/50'
                       }`}
                     >
                       {num} {num === 1 ? 'Guest' : 'Guests'}
@@ -300,7 +300,7 @@ export default function TableReservation() {
               {/* Contact Inputs */}
               <div className="space-y-4">
                 <div>
-                  <label className="text-[11px] font-mono uppercase tracking-widest text-[#C9A86C]/80 block mb-1">
+                  <label className="text-[11px] font-mono uppercase tracking-widest text-[#5A5049] block mb-1 font-semibold">
                     Your Full Name
                   </label>
                   <input
@@ -309,12 +309,12 @@ export default function TableReservation() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Aditya Sharma"
-                    className="w-full bg-[#0B0604] border border-[#2A180E] rounded-xl px-4 py-3 text-xs sm:text-sm text-[#F5E6D0] placeholder-[#F5E6D0]/30 focus:outline-none focus:border-[#D89B5A]"
+                    className="w-full bg-white border border-[#2B2421]/20 rounded-xl px-4 py-3 text-xs sm:text-sm text-[#2B2421] placeholder-[#2B2421]/30 focus:outline-none focus:border-[#A8583B] shadow-sm"
                   />
                 </div>
 
                 <div>
-                  <label className="text-[11px] font-mono uppercase tracking-widest text-[#C9A86C]/80 block mb-1">
+                  <label className="text-[11px] font-mono uppercase tracking-widest text-[#5A5049] block mb-1 font-semibold">
                     WhatsApp / Mobile (+91)
                   </label>
                   <input
@@ -323,7 +323,7 @@ export default function TableReservation() {
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="+91 98765 43210"
-                    className="w-full bg-[#0B0604] border border-[#2A180E] rounded-xl px-4 py-3 text-xs sm:text-sm text-[#F5E6D0] placeholder-[#F5E6D0]/30 focus:outline-none focus:border-[#D89B5A]"
+                    className="w-full bg-white border border-[#2B2421]/20 rounded-xl px-4 py-3 text-xs sm:text-sm text-[#2B2421] placeholder-[#2B2421]/30 focus:outline-none focus:border-[#A8583B] shadow-sm"
                   />
                 </div>
               </div>
@@ -331,7 +331,7 @@ export default function TableReservation() {
               {/* Submit CTA */}
               <button
                 type="submit"
-                className="btn-tactile w-full py-4 rounded-2xl bg-gradient-to-r from-[#D89B5A] via-[#C9A86C] to-[#B8722E] text-[#0B0705] font-semibold uppercase tracking-[0.18em] text-xs shadow-[0_0_25px_rgba(216,155,90,0.4)] hover:shadow-[0_0_40px_rgba(216,155,90,0.7)] transition-all"
+                className="w-full py-4 rounded-full bg-[#2B2421] text-[#FBF9F5] font-medium uppercase tracking-[0.15em] text-xs hover:bg-[#A8583B] shadow-sm transition-all cursor-pointer"
               >
                 Confirm Spot at {selectedTable.name}
               </button>
@@ -345,41 +345,41 @@ export default function TableReservation() {
 
       {/* Confirmation Modal */}
       {confirmedBooking && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#0B0705]/90 backdrop-blur-xl p-4">
-          <div className="max-w-md w-full bg-[#180E09] border border-[#D89B5A] rounded-3xl p-8 shadow-[0_0_60px_rgba(216,155,90,0.3)] text-center animate-fade-in-up">
-            <div className="w-16 h-16 rounded-full bg-[#D89B5A]/20 border border-[#D89B5A] text-[#D89B5A] mx-auto flex items-center justify-center mb-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#2B2421]/70 backdrop-blur-md p-4">
+          <div className="max-w-md w-full bg-[#FBF9F5] border border-[#2B2421]/20 rounded-3xl p-8 shadow-xl text-center animate-fade-in-up">
+            <div className="w-16 h-16 rounded-full bg-[#A8583B]/10 border border-[#A8583B] text-[#A8583B] mx-auto flex items-center justify-center mb-4">
               <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
               </svg>
             </div>
 
-            <h3 className="text-2xl font-serif text-[#F5E6D0] mb-1">Spot Reserved!</h3>
-            <p className="text-xs font-mono text-[#D89B5A] uppercase tracking-widest mb-6">
+            <h3 className="text-2xl font-serif text-[#2B2421] mb-1 font-bold">Spot Reserved!</h3>
+            <p className="text-xs font-mono text-[#A8583B] uppercase tracking-widest mb-6 font-semibold">
               Token #RES-{Math.floor(1000 + Math.random() * 9000)}
             </p>
 
-            <div className="bg-[#0B0604] p-4 rounded-2xl border border-[#2A180E] text-left space-y-2 text-xs font-mono mb-6">
+            <div className="bg-[#F2EDE4] p-4 rounded-2xl border border-[#2B2421]/15 text-left space-y-2 text-xs font-mono mb-6">
               <div className="flex justify-between">
-                <span className="text-[#C9A86C]/70">Spot:</span>
-                <span className="text-[#F5E6D0]">{confirmedBooking.tableName} ({confirmedBooking.zone})</span>
+                <span className="text-[#5A5049]">Spot:</span>
+                <span className="text-[#2B2421] font-semibold">{confirmedBooking.tableName} ({confirmedBooking.zone})</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#C9A86C]/70">Date & Time:</span>
-                <span className="text-[#F5E6D0]">{confirmedBooking.date} at {confirmedBooking.timeSlot}</span>
+                <span className="text-[#5A5049]">Date & Time:</span>
+                <span className="text-[#2B2421] font-semibold">{confirmedBooking.date} at {confirmedBooking.timeSlot}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#C9A86C]/70">Guest:</span>
-                <span className="text-[#F5E6D0]">{confirmedBooking.guestName} ({confirmedBooking.guests}p)</span>
+                <span className="text-[#5A5049]">Guest:</span>
+                <span className="text-[#2B2421] font-semibold">{confirmedBooking.guestName} ({confirmedBooking.guests}p)</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#C9A86C]/70">Location:</span>
-                <span className="text-[#F5E6D0]">Indiranagar Flagship, Bengaluru</span>
+                <span className="text-[#5A5049]">Location:</span>
+                <span className="text-[#2B2421] font-semibold">Indiranagar Flagship, Bengaluru</span>
               </div>
             </div>
 
             <button
               onClick={() => setConfirmedBooking(null)}
-              className="btn-tactile w-full py-3.5 rounded-xl bg-[#D89B5A] text-[#0B0705] font-semibold text-xs uppercase tracking-wider hover:brightness-110"
+              className="w-full py-3.5 rounded-full bg-[#2B2421] text-[#FBF9F5] font-medium text-xs uppercase tracking-widest hover:bg-[#A8583B] transition-all cursor-pointer shadow-sm"
             >
               Done
             </button>
