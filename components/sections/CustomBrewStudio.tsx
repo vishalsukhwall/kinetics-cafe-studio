@@ -72,19 +72,19 @@ export default function CustomBrewStudio() {
   return (
     <section
       id="custom-brew"
-      className="relative min-h-screen w-full bg-theme-brew py-32 px-6 sm:px-8 lg:px-12 transition-colors duration-700"
+      className="relative min-h-screen w-full bg-[#FBF9F5] text-[#2B2421] py-24 px-6 sm:px-8 lg:px-12 font-sans"
     >
       <div className="max-w-6xl mx-auto">
         
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-20">
-          <span className="text-[11px] font-mono uppercase tracking-[0.35em] text-terracotta block mb-3 font-medium">
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <span className="text-xs font-mono uppercase tracking-[0.3em] text-[#A8583B] block mb-2 font-semibold">
             03 · Custom Brew Studio
           </span>
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-serif tracking-[0.16em] uppercase text-espresso">
+          <h2 className="text-4xl sm:text-5xl font-serif tracking-wide uppercase text-[#2B2421]">
             Craft Your Cup
           </h2>
-          <p className="mt-4 text-xs sm:text-sm text-espresso/70 font-light leading-relaxed">
+          <p className="mt-3 text-xs sm:text-sm text-[#5A5049] font-light leading-relaxed">
             Personalize your extraction method, plant-based milk, roast profile, and temperature in real time.
           </p>
         </div>
@@ -93,25 +93,25 @@ export default function CustomBrewStudio() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
           
           {/* Left Column: Live Visualizer & Price Card */}
-          <div className="lg:col-span-5 sticky top-28 glass-card p-8 flex flex-col items-center">
+          <div className="lg:col-span-5 sticky top-28 bg-[#F2EDE4] border border-[#2B2421]/15 rounded-2xl p-8 flex flex-col items-center shadow-sm">
             
             {/* Minimalist Visual SVG Cup */}
             <div className="relative w-56 h-56 flex items-center justify-center my-2">
               {!isIced && (
                 <div className="absolute -top-4 flex gap-2.5 opacity-60 animate-pulse">
-                  <div className="w-1 h-6 bg-gradient-to-t from-border to-transparent rounded-full" />
-                  <div className="w-1 h-10 bg-gradient-to-t from-border to-transparent rounded-full delay-100" />
-                  <div className="w-1 h-7 bg-gradient-to-t from-border to-transparent rounded-full delay-200" />
+                  <div className="w-1 h-6 bg-gradient-to-t from-[#2B2421]/20 to-transparent rounded-full" />
+                  <div className="w-1 h-10 bg-gradient-to-t from-[#2B2421]/20 to-transparent rounded-full delay-100" />
+                  <div className="w-1 h-7 bg-gradient-to-t from-[#2B2421]/20 to-transparent rounded-full delay-200" />
                 </div>
               )}
 
               <svg className="w-48 h-48 drop-shadow-[0_15px_25px_rgba(43,36,33,0.06)]" viewBox="0 0 200 200" fill="none">
-                <ellipse cx="100" cy="175" rx="75" ry="10" fill="rgba(255,255,255,0.5)" stroke="rgba(217,207,196,0.8)" strokeWidth="1.5" />
-                <path d="M48 65 L62 160 C64 166, 136 166, 138 160 L152 65 Z" fill="rgba(255,255,255,0.4)" stroke="rgba(217,207,196,0.9)" strokeWidth="2" />
-                <path d="M150 78 C175 78, 175 132, 140 138" stroke="rgba(217,207,196,1)" strokeWidth="5" strokeLinecap="round" fill="none" />
+                <ellipse cx="100" cy="175" rx="75" ry="10" fill="rgba(255,255,255,0.6)" stroke="#2B2421" strokeOpacity="0.2" strokeWidth="1.5" />
+                <path d="M48 65 L62 160 C64 166, 136 166, 138 160 L152 65 Z" fill="rgba(255,255,255,0.5)" stroke="#2B2421" strokeOpacity="0.3" strokeWidth="2" />
+                <path d="M150 78 C175 78, 175 132, 140 138" stroke="#2B2421" strokeOpacity="0.3" strokeWidth="5" strokeLinecap="round" fill="none" />
                 <path d="M54 80 L62 156 C64 162, 136 162, 138 156 L146 80 Z" fill={liquidColor} className="transition-all duration-500 opacity-90" />
                 {milk.id !== 'none' && (
-                  <ellipse cx="100" cy="80" rx="45" ry="8" fill="#F2EBE5" fillOpacity="0.9" />
+                  <ellipse cx="100" cy="80" rx="45" ry="8" fill="#FBF9F5" fillOpacity="0.9" />
                 )}
                 {isIced && (
                   <rect x="88" y="72" width="16" height="16" rx="3" fill="#FFFFFF" fillOpacity="0.8" transform="rotate(15 96 80)" />
@@ -120,35 +120,35 @@ export default function CustomBrewStudio() {
             </div>
 
             {/* Selected Configuration Summary */}
-            <div className="w-full mt-4 space-y-2 text-xs font-mono border-t border-border pt-4">
-              <div className="flex justify-between text-espresso font-medium">
-                <span className="text-espresso/60">Base:</span>
+            <div className="w-full mt-4 space-y-2 text-xs font-mono border-t border-[#2B2421]/10 pt-4">
+              <div className="flex justify-between text-[#2B2421] font-medium">
+                <span className="text-[#5A5049]">Base:</span>
                 <span>{base.name}</span>
               </div>
-              <div className="flex justify-between text-espresso font-medium">
-                <span className="text-espresso/60">Milk:</span>
+              <div className="flex justify-between text-[#2B2421] font-medium">
+                <span className="text-[#5A5049]">Milk:</span>
                 <span>{milk.name}</span>
               </div>
-              <div className="flex justify-between text-espresso font-medium">
-                <span className="text-espresso/60">Roast:</span>
+              <div className="flex justify-between text-[#2B2421] font-medium">
+                <span className="text-[#5A5049]">Roast:</span>
                 <span>{roast.name}</span>
               </div>
-              <div className="flex justify-between text-espresso font-medium">
-                <span className="text-espresso/60">Style:</span>
+              <div className="flex justify-between text-[#2B2421] font-medium">
+                <span className="text-[#5A5049]">Style:</span>
                 <span>{isIced ? 'Iced (+₹15)' : 'Hot 65°C'}</span>
               </div>
             </div>
 
             {/* Price & Add to Cart */}
-            <div className="w-full mt-6 pt-4 border-t border-border flex flex-col gap-3">
+            <div className="w-full mt-6 pt-4 border-t border-[#2B2421]/10 flex flex-col gap-3">
               <div className="flex justify-between items-baseline">
-                <span className="text-[11px] font-mono uppercase tracking-widest text-espresso/60 font-medium">Price in INR</span>
-                <span className="text-3xl font-mono font-bold text-espresso">₹{totalPrice}</span>
+                <span className="text-[11px] font-mono uppercase tracking-widest text-[#5A5049] font-medium">Price in INR</span>
+                <span className="text-3xl font-mono font-bold text-[#2B2421]">₹{totalPrice}</span>
               </div>
 
               <button
                 onClick={handleAddToCart}
-                className="btn-tactile w-full py-3.5 rounded-2xl bg-espresso text-paper font-medium uppercase tracking-[0.16em] text-xs hover:bg-espresso/90 active:scale-[0.99] transition-all"
+                className="w-full py-3.5 rounded-full bg-[#2B2421] text-[#FBF9F5] font-medium uppercase tracking-[0.15em] text-xs hover:bg-[#A8583B] active:scale-[0.99] transition-all cursor-pointer shadow-sm"
               >
                 {added ? '✓ Added to Order' : `Add Custom Brew · ₹${totalPrice}`}
               </button>
@@ -157,11 +157,11 @@ export default function CustomBrewStudio() {
           </div>
 
           {/* Right Column: Step-by-Step Options */}
-          <div className="lg:col-span-7 space-y-8">
+          <div className="lg:col-span-7 space-y-6">
             
             {/* Step 1: Base */}
-            <div className="glass-card p-6">
-              <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-espresso/60 block mb-3 font-medium">
+            <div className="bg-[#F2EDE4] border border-[#2B2421]/15 rounded-2xl p-6 shadow-sm">
+              <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#A8583B] block mb-3 font-semibold">
                 Step 01 · Base Extraction
               </span>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -171,17 +171,17 @@ export default function CustomBrewStudio() {
                     <button
                       key={b.id}
                       onClick={() => setBase(b)}
-                      className={`p-3.5 rounded-2xl text-left border transition-all ${
+                      className={`p-3.5 rounded-xl text-left border transition-all cursor-pointer ${
                         sel
-                          ? 'border-terracotta bg-white shadow-sm'
-                          : 'border-border bg-transparent hover:border-terracotta/50 hover:bg-white/50'
+                          ? 'border-[#A8583B] bg-white shadow-sm ring-1 ring-[#A8583B]/20'
+                          : 'border-[#2B2421]/15 bg-transparent hover:border-[#A8583B]/50 hover:bg-white/50'
                       }`}
                     >
                       <div className="flex justify-between items-baseline mb-1">
-                        <span className={`font-serif text-sm font-semibold ${sel ? 'text-espresso' : 'text-espresso/80'}`}>{b.name}</span>
-                        <span className={`text-xs font-mono font-medium ${sel ? 'text-terracotta' : 'text-espresso/50'}`}>₹{b.price}</span>
+                        <span className={`font-serif text-sm font-semibold ${sel ? 'text-[#2B2421]' : 'text-[#2B2421]/80'}`}>{b.name}</span>
+                        <span className={`text-xs font-mono font-medium ${sel ? 'text-[#A8583B]' : 'text-[#5A5049]'}`}>₹{b.price}</span>
                       </div>
-                      <p className="text-[10px] text-espresso/60 font-light">{b.description}</p>
+                      <p className="text-[10px] text-[#5A5049] font-light">{b.description}</p>
                     </button>
                   );
                 })}
@@ -189,8 +189,8 @@ export default function CustomBrewStudio() {
             </div>
 
             {/* Step 2: Milk */}
-            <div className="glass-card p-6">
-              <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-espresso/60 block mb-3 font-medium">
+            <div className="bg-[#F2EDE4] border border-[#2B2421]/15 rounded-2xl p-6 shadow-sm">
+              <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#A8583B] block mb-3 font-semibold">
                 Step 02 · Milk Texture
               </span>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -200,17 +200,17 @@ export default function CustomBrewStudio() {
                     <button
                       key={m.id}
                       onClick={() => setMilk(m)}
-                      className={`p-3.5 rounded-2xl text-left border transition-all ${
+                      className={`p-3.5 rounded-xl text-left border transition-all cursor-pointer ${
                         sel
-                          ? 'border-terracotta bg-white shadow-sm'
-                          : 'border-border bg-transparent hover:border-terracotta/50 hover:bg-white/50'
+                          ? 'border-[#A8583B] bg-white shadow-sm ring-1 ring-[#A8583B]/20'
+                          : 'border-[#2B2421]/15 bg-transparent hover:border-[#A8583B]/50 hover:bg-white/50'
                       }`}
                     >
                       <div className="flex justify-between items-baseline mb-1">
-                        <span className={`font-serif text-sm font-semibold ${sel ? 'text-espresso' : 'text-espresso/80'}`}>{m.name}</span>
-                        <span className={`text-xs font-mono font-medium ${sel ? 'text-terracotta' : 'text-espresso/50'}`}>{m.price > 0 ? `+₹${m.price}` : 'Free'}</span>
+                        <span className={`font-serif text-sm font-semibold ${sel ? 'text-[#2B2421]' : 'text-[#2B2421]/80'}`}>{m.name}</span>
+                        <span className={`text-xs font-mono font-medium ${sel ? 'text-[#A8583B]' : 'text-[#5A5049]'}`}>{m.price > 0 ? `+₹${m.price}` : 'Free'}</span>
                       </div>
-                      <p className="text-[10px] text-espresso/60 font-light">{m.description}</p>
+                      <p className="text-[10px] text-[#5A5049] font-light">{m.description}</p>
                     </button>
                   );
                 })}
@@ -218,8 +218,8 @@ export default function CustomBrewStudio() {
             </div>
 
             {/* Step 3: Roast */}
-            <div className="glass-card p-6">
-              <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-espresso/60 block mb-3 font-medium">
+            <div className="bg-[#F2EDE4] border border-[#2B2421]/15 rounded-2xl p-6 shadow-sm">
+              <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#A8583B] block mb-3 font-semibold">
                 Step 03 · Roast Profile
               </span>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -229,14 +229,14 @@ export default function CustomBrewStudio() {
                     <button
                       key={r.id}
                       onClick={() => setRoast(r)}
-                      className={`p-3 rounded-2xl text-left border transition-all ${
+                      className={`p-3 rounded-xl text-left border transition-all cursor-pointer ${
                         sel
-                          ? 'border-terracotta bg-white shadow-sm'
-                          : 'border-border bg-transparent hover:border-terracotta/50 hover:bg-white/50'
+                          ? 'border-[#A8583B] bg-white shadow-sm ring-1 ring-[#A8583B]/20'
+                          : 'border-[#2B2421]/15 bg-transparent hover:border-[#A8583B]/50 hover:bg-white/50'
                       }`}
                     >
-                      <span className={`font-serif text-xs font-semibold block mb-1 ${sel ? 'text-espresso' : 'text-espresso/80'}`}>{r.name}</span>
-                      <p className="text-[10px] text-espresso/60 font-light">{r.description}</p>
+                      <span className={`font-serif text-xs font-semibold block mb-1 ${sel ? 'text-[#2B2421]' : 'text-[#2B2421]/80'}`}>{r.name}</span>
+                      <p className="text-[10px] text-[#5A5049] font-light">{r.description}</p>
                     </button>
                   );
                 })}
@@ -245,8 +245,8 @@ export default function CustomBrewStudio() {
 
             {/* Step 4: Sweetness & Temperature */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="glass-card p-5">
-                <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-espresso/60 block mb-3 font-medium">
+              <div className="bg-[#F2EDE4] border border-[#2B2421]/15 rounded-2xl p-5 shadow-sm">
+                <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#A8583B] block mb-3 font-semibold">
                   Sweetener
                 </span>
                 <div className="space-y-2">
@@ -254,45 +254,45 @@ export default function CustomBrewStudio() {
                     <button
                       key={s.id}
                       onClick={() => setSweetener(s)}
-                      className={`w-full p-2.5 px-3 rounded-xl text-left border flex justify-between items-center text-xs transition-all ${
+                      className={`w-full p-2.5 px-3 rounded-xl text-left border flex justify-between items-center text-xs transition-all cursor-pointer ${
                         sweetener.id === s.id
-                          ? 'border-terracotta bg-white text-espresso shadow-sm font-semibold'
-                          : 'border-border bg-transparent text-espresso/80 hover:border-terracotta/50 hover:bg-white/50'
+                          ? 'border-[#A8583B] bg-white text-[#2B2421] shadow-sm font-semibold ring-1 ring-[#A8583B]/20'
+                          : 'border-[#2B2421]/15 bg-transparent text-[#2B2421]/80 hover:border-[#A8583B]/50 hover:bg-white/50'
                       }`}
                     >
                       <span>{s.name}</span>
-                      <span className={`font-mono text-[11px] font-medium ${sweetener.id === s.id ? 'text-terracotta' : 'text-espresso/50'}`}>{s.price > 0 ? `+₹${s.price}` : 'Free'}</span>
+                      <span className={`font-mono text-[11px] font-medium ${sweetener.id === s.id ? 'text-[#A8583B]' : 'text-[#5A5049]'}`}>{s.price > 0 ? `+₹${s.price}` : 'Free'}</span>
                     </button>
                   ))}
                 </div>
               </div>
 
-              <div className="glass-card p-5">
-                <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-espresso/60 block mb-3 font-medium">
+              <div className="bg-[#F2EDE4] border border-[#2B2421]/15 rounded-2xl p-5 shadow-sm">
+                <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#A8583B] block mb-3 font-semibold">
                   Temperature
                 </span>
                 <div className="space-y-2">
                   <button
                     onClick={() => setIsIced(false)}
-                    className={`w-full p-2.5 px-3 rounded-xl text-left border flex justify-between items-center text-xs transition-all ${
+                    className={`w-full p-2.5 px-3 rounded-xl text-left border flex justify-between items-center text-xs transition-all cursor-pointer ${
                       !isIced
-                        ? 'border-terracotta bg-white text-espresso shadow-sm font-semibold'
-                        : 'border-border bg-transparent text-espresso/80 hover:border-terracotta/50 hover:bg-white/50'
+                        ? 'border-[#A8583B] bg-white text-[#2B2421] shadow-sm font-semibold ring-1 ring-[#A8583B]/20'
+                        : 'border-[#2B2421]/15 bg-transparent text-[#2B2421]/80 hover:border-[#A8583B]/50 hover:bg-white/50'
                     }`}
                   >
                     <span>Steaming Hot (65°C)</span>
-                    <span className={`font-mono text-[11px] font-medium ${!isIced ? 'text-terracotta' : 'text-espresso/50'}`}>Free</span>
+                    <span className={`font-mono text-[11px] font-medium {!isIced ? 'text-[#A8583B]' : 'text-[#5A5049]'}`}>Free</span>
                   </button>
                   <button
                     onClick={() => setIsIced(true)}
-                    className={`w-full p-2.5 px-3 rounded-xl text-left border flex justify-between items-center text-xs transition-all ${
+                    className={`w-full p-2.5 px-3 rounded-xl text-left border flex justify-between items-center text-xs transition-all cursor-pointer ${
                       isIced
-                        ? 'border-terracotta bg-white text-espresso shadow-sm font-semibold'
-                        : 'border-border bg-transparent text-espresso/80 hover:border-terracotta/50 hover:bg-white/50'
+                        ? 'border-[#A8583B] bg-white text-[#2B2421] shadow-sm font-semibold ring-1 ring-[#A8583B]/20'
+                        : 'border-[#2B2421]/15 bg-transparent text-[#2B2421]/80 hover:border-[#A8583B]/50 hover:bg-white/50'
                     }`}
                   >
                     <span>Iced Over Hand-Cut Sphere</span>
-                    <span className={`font-mono text-[11px] font-medium ${isIced ? 'text-terracotta' : 'text-espresso/50'}`}>+₹15</span>
+                    <span className={`font-mono text-[11px] font-medium ${isIced ? 'text-[#A8583B]' : 'text-[#5A5049]'}`}>+₹15</span>
                   </button>
                 </div>
               </div>

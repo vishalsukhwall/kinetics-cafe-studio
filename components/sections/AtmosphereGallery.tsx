@@ -107,16 +107,16 @@ export default function AtmosphereGallery() {
   };
 
   return (
-    <section ref={containerRef} className="py-32 px-4 sm:px-8 md:px-12 max-w-7xl mx-auto w-full text-[#F5E6D0]">
+    <section ref={containerRef} className="py-24 px-6 sm:px-8 md:px-12 max-w-7xl mx-auto w-full bg-[#FBF9F5] text-[#2B2421] font-sans">
       {/* Section Title */}
-      <header className="mb-20 text-center">
-        <span className="text-xs uppercase tracking-[0.35em] text-[#D89B5A] font-light">
+      <header className="mb-16 text-center">
+        <span className="text-xs uppercase tracking-[0.3em] text-[#A8583B] font-semibold">
           Sensory Architecture
         </span>
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif tracking-[0.2em] uppercase text-[#F5E6D0] mt-3">
+        <h2 className="text-4xl md:text-5xl font-serif uppercase text-[#2B2421] mt-3 tracking-wide">
           Atmosphere & Craft
         </h2>
-        <p className="mt-4 max-w-xl mx-auto text-sm md:text-base text-[#C9A86C]/80 font-light leading-relaxed">
+        <p className="mt-4 max-w-xl mx-auto text-sm md:text-base text-[#5A5049] font-light leading-relaxed">
           Step into our sanctuary of fire, wood, and steam. Every corner is designed for mindful connection with coffee in its purest form.
         </p>
       </header>
@@ -128,7 +128,7 @@ export default function AtmosphereGallery() {
             key={item.id}
             ref={(el) => { itemsRef.current[i] = el; }}
             onClick={() => setActivePhoto(item)}
-            className={`relative group overflow-hidden rounded-3xl cursor-pointer border border-[#C9A86C]/20 bg-[#1A0F0A]/60 shadow-[0_10px_30px_rgba(0,0,0,0.8)] transition-all duration-500 hover:border-[#D89B5A]/80 hover:shadow-[0_10px_40px_rgba(216,155,90,0.2)] ${getAspectClass(
+            className={`relative group overflow-hidden rounded-2xl cursor-pointer border border-[#2B2421]/10 bg-[#F2EDE4] shadow-sm transition-all duration-500 hover:border-[#A8583B] hover:shadow-md ${getAspectClass(
               item.aspect
             )}`}
           >
@@ -140,26 +140,26 @@ export default function AtmosphereGallery() {
               loading="lazy"
             />
 
-            {/* Dark Vignette Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0B0705]/95 via-[#0B0705]/40 to-transparent transition-opacity duration-300 group-hover:opacity-90" />
+            {/* Warm Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#2B2421]/90 via-[#2B2421]/30 to-transparent transition-opacity duration-300 group-hover:opacity-95" />
 
             {/* Content & Hover Caption */}
             <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end transition-all duration-300">
-              <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#D89B5A] mb-1 opacity-90">
+              <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#C9A86C] mb-1 font-semibold">
                 Gallery · 0{item.id}
               </span>
-              <h3 className="text-2xl md:text-3xl font-serif text-[#F5E6D0] leading-snug group-hover:text-[#D89B5A] transition-colors">
+              <h3 className="text-2xl font-serif text-[#FBF9F5] leading-snug group-hover:text-[#C9A86C] transition-colors">
                 {item.title}
               </h3>
-              <p className="text-xs text-[#F5E6D0]/70 mt-2 font-light opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+              <p className="text-xs text-[#FBF9F5]/80 mt-2 font-light opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
                 {item.subtitle}
               </p>
             </div>
 
             {/* Corner Luxury Accent */}
-            <div className="absolute top-4 right-4 w-7 h-7 rounded-full bg-[#0B0705]/70 border border-[#C9A86C]/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-md">
-              <svg className="w-3.5 h-3.5 text-[#D89B5A]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
+            <div className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/80 border border-[#2B2421]/15 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-md shadow-sm">
+              <svg className="w-4 h-4 text-[#2B2421]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 4v16m8-8H4" />
               </svg>
             </div>
           </div>
@@ -169,14 +169,14 @@ export default function AtmosphereGallery() {
       {/* Fullscreen Photo Lightbox Modal */}
       {activePhoto && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-[#0B0705]/95 backdrop-blur-xl p-4 sm:p-8"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[#2B2421]/80 backdrop-blur-md p-4 sm:p-8"
           onClick={() => setActivePhoto(null)}
         >
           <div
-            className="relative max-w-4xl w-full max-h-[90vh] bg-[#1A0F0A] border border-[#C9A86C]/40 rounded-3xl overflow-hidden shadow-2xl flex flex-col"
+            className="relative max-w-4xl w-full max-h-[90vh] bg-[#FBF9F5] border border-[#2B2421]/20 rounded-2xl overflow-hidden shadow-2xl flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="relative h-[65vh] w-full overflow-hidden">
+            <div className="relative h-[65vh] w-full overflow-hidden bg-[#F2EDE4]">
               <img
                 src={activePhoto.imageUrl}
                 alt={activePhoto.title}
@@ -184,20 +184,20 @@ export default function AtmosphereGallery() {
               />
               <button
                 onClick={() => setActivePhoto(null)}
-                className="absolute top-4 right-4 w-10 h-10 rounded-full bg-[#0B0705]/80 border border-[#C9A86C]/40 text-[#F5E6D0] flex items-center justify-center hover:bg-[#D89B5A] hover:text-[#0B0705] transition-all"
+                className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/90 border border-[#2B2421]/20 text-[#2B2421] flex items-center justify-center hover:bg-[#2B2421] hover:text-[#FBF9F5] transition-all shadow-sm"
                 aria-label="Close"
               >
                 ✕
               </button>
             </div>
-            <div className="p-6 bg-[#0B0705] border-t border-[#2A1F1A] flex justify-between items-center">
+            <div className="p-6 bg-[#FBF9F5] border-t border-[#2B2421]/10 flex justify-between items-center">
               <div>
-                <h3 className="text-2xl font-serif text-[#F5E6D0]">{activePhoto.title}</h3>
-                <p className="text-sm text-[#C9A86C]/80 mt-1 font-light">{activePhoto.subtitle}</p>
+                <h3 className="text-2xl font-serif text-[#2B2421]">{activePhoto.title}</h3>
+                <p className="text-sm text-[#5A5049] mt-1 font-light">{activePhoto.subtitle}</p>
               </div>
               <button
                 onClick={() => setActivePhoto(null)}
-                className="px-5 py-2 rounded-lg border border-[#C9A86C]/30 text-xs uppercase tracking-widest text-[#D89B5A] hover:bg-[#D89B5A]/20 transition-colors"
+                className="px-6 py-2.5 rounded-full bg-[#2B2421] text-[#FBF9F5] text-xs uppercase tracking-widest hover:bg-[#A8583B] transition-colors shadow-sm"
               >
                 Close
               </button>
