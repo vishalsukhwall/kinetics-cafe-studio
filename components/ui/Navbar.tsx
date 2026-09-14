@@ -176,7 +176,9 @@ export default function Navbar() {
                 onClick={() => { setMobileMenuOpen(false); scrollToSection('contact'); }}
                 className="w-full py-3 rounded-full border border-[#2B2421]/30 text-[#2B2421] text-xs uppercase tracking-widest font-medium text-center hover:bg-[#2B2421] hover:text-[#FBF9F5] transition-all cursor-pointer"
               >
+
                 Contact Us
+                
               </button>
               <a 
                 href="https://wa.me/919352457597" 
