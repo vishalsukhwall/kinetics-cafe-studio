@@ -182,7 +182,7 @@ export default function OrderDrawer() {
               <div className="flex justify-between text-[#5A5049]">
                 <span>Cafe GST (5%)</span>
                 <span>₹{gst.toLocaleString('en-IN')}</span>
-              </div>
+              </div> 
               <div className="flex justify-between text-base text-[#2B2421] font-serif pt-2 border-t border-[#2B2421]/15 font-bold">
                 <span>Grand Total</span>
                 <span className="font-mono text-[#A8583B]">₹{total.toLocaleString('en-IN')}</span>
@@ -197,7 +197,7 @@ export default function OrderDrawer() {
             </button>
 
             <p className="text-center text-[10px] text-[#5A5049] mt-3 font-mono">
-              Pickup at Espresso Bar · 15–20 minutes
+              Pickup at Espresso Bar · 15–20 minutes 
             </p>
           </div>
         )}
