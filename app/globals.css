@@ -1,38 +1,206 @@
 @import "tailwindcss";
 
-:root {
-  --color-paper: #FFFFFF; /* Pure clean white background */
-  --color-espresso: #1A1A1A; /* Deep sharp dark grey/black text */
-  --color-sand: #F7F7F7; /* Soft light grey for cards */
-  --color-sand-solid: #EEEEEE;
-  --color-border: #E5E5E5;
-  --color-terracotta: #A8583B;
-  --color-gold: #C9A86C;
+/* ─────────────────────────────────────────────────────────────
+   Kinetics Caffe — Colorful & Professional Boutique Design System
+   A harmonious multi-color palette:
+   - Base Paper Canvas: #FDFBF7 (soft warm alabaster)
+   - Rich Espresso Typography: #2B2421 & #1E293B
+   - Caramel & Amber Gold: #D97706 / #F59E0B (Roast & Coffee)
+   - Botanical Emerald & Mint: #059669 / #10B981 (Organic & Terroir)
+   - Terracotta & Peach Rose: #E11D48 / #F43F5E / #FB923C (Kitchen & Desserts)
+   - Violet & Lavender: #7C3AED / #8B5CF6 (Craft Brew Lab)
+   - Sky & Cloud Cyan: #0284C7 / #38BDF8 (Hand Pour & Cold Drip)
+   - WhatsApp Vibrant Green: #25D366
+   ─────────────────────────────────────────────────────────── */
 
-  --background: var(--color-paper);
-  --foreground: var(--color-espresso);
-  
+:root {
+  /* Brand Core */
+  --color-paper: #FDFBF7;
+  --color-paper-warm: #FBF7F0;
+  --color-espresso: #2B2421;
+  --color-muted: #64748B;
+  --color-border: rgba(43, 36, 33, 0.1);
+
+  /* Vibrant Accents */
+  --color-amber-brand: #D97706;
+  --color-emerald-brand: #059669;
+  --color-rose-brand: #E11D48;
+  --color-violet-brand: #7C3AED;
+  --color-sky-brand: #0284C7;
+  --color-whatsapp: #25D366;
+
+  /* Typography */
   --font-display: "Playfair Display", Georgia, serif;
   --font-body: system-ui, -apple-system, sans-serif;
   --font-mono: ui-monospace, monospace;
 }
 
+@theme inline {
+  --color-paper: var(--color-paper);
+  --color-espresso: var(--color-espresso);
+  --color-muted: var(--color-muted);
+  --color-border: var(--color-border);
+  --color-amber-brand: var(--color-amber-brand);
+  --color-emerald-brand: var(--color-emerald-brand);
+  --color-rose-brand: var(--color-rose-brand);
+  --color-violet-brand: var(--color-violet-brand);
+  --color-sky-brand: var(--color-sky-brand);
+  --color-whatsapp: var(--color-whatsapp);
+  
+  --font-sans: var(--font-body);
+  --font-mono: var(--font-mono);
+  --font-serif: var(--font-display);
+}
+
+/* ─── Base resets & smooth rendering ─────────── */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 body {
   margin: 0;
   padding: 0;
-  background: var(--background);
-  color: var(--foreground);
+  background: #FDFBF7;
+  color: #2B2421;
   font-family: var(--font-body);
   overflow-x: hidden;
   min-height: 100vh;
 }
 
-.bg-theme-hero,
-.bg-theme-pink,
-.bg-theme-menu,
-.bg-theme-brew,
-.bg-theme-sanctuary,
+/* ─── Multi-Color Gradient Section Atmospheres ── */
+
+.bg-theme-hero {
+  background: radial-gradient(circle at 85% 20%, rgba(254, 215, 170, 0.4) 0%, rgba(224, 242, 254, 0.3) 45%, #FDFBF7 80%);
+}
+
+.bg-theme-why {
+  background: radial-gradient(circle at 15% 50%, rgba(209, 250, 229, 0.45) 0%, rgba(254, 243, 199, 0.3) 60%, #FDFBF7 100%);
+}
+
+.bg-theme-menu {
+  background: radial-gradient(circle at 75% 30%, rgba(254, 205, 211, 0.35) 0%, rgba(254, 240, 138, 0.25) 50%, #FDFBF7 90%);
+}
+
+.bg-theme-brew {
+  background: radial-gradient(circle at 20% 40%, rgba(237, 233, 254, 0.5) 0%, rgba(224, 242, 254, 0.3) 60%, #FDFBF7 100%);
+}
+
+.bg-theme-sanctuary {
+  background: radial-gradient(circle at 80% 60%, rgba(209, 250, 229, 0.4) 0%, rgba(237, 233, 254, 0.25) 50%, #FDFBF7 90%);
+}
+
 .bg-theme-footer {
-  background: var(--background);
-  color: var(--foreground);
+  background: linear-gradient(180deg, #FDFBF7 0%, #F8F4EB 100%);
+}
+
+/* ─── Custom boutique scrollbar ──────────────── */
+
+::-webkit-scrollbar {
+  width: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #FDFBF7;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #D97706;
+}
+
+::selection {
+  background: rgba(217, 119, 6, 0.25);
+  color: #2B2421;
+}
+
+/* ─── Elevated Glassmorphism Cards ───────────── */
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(43, 36, 33, 0.08);
+  box-shadow: 0 8px 30px rgba(43, 36, 33, 0.04);
+  border-radius: 1.25rem;
+  transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.glass-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(217, 119, 6, 0.3);
+  box-shadow: 0 16px 40px rgba(43, 36, 33, 0.08);
+}
+
+/* ─── Tactile Button Micro-interactions ──────── */
+
+.btn-tactile {
+  transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+    box-shadow 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+    background-color 0.25s ease,
+    border-color 0.25s ease;
+  will-change: transform;
+}
+.btn-tactile:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(43, 36, 33, 0.12);
+}
+.btn-tactile:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: 0 2px 6px rgba(43, 36, 33, 0.06);
+}
+
+/* ─── Smooth Lenis styles ────────────────────── */
+
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+.lenis.lenis-scrolling iframe { pointer-events: none; }
+
+/* ─── Reduced motion ─────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ─── Canvas container ───────────────────────── */
+
+.canvas-container {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.canvas-container canvas {
+  pointer-events: auto;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in-up {
+  animation: fadeInUp 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.08); }
+}
+.animate-pulse-glow {
+  animation: pulseGlow 3s ease-in-out infinite;
 }

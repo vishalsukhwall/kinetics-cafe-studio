@@ -17,7 +17,6 @@ export default function Preloader({ onComplete }: PreloaderProps) {
     // Increment loading counter smoothly
     let current = 0;
     const interval = setInterval(() => {
-      // Accelerate towards end
       const increment = Math.max(1, Math.floor((100 - current) * 0.12));
       current = Math.min(100, current + increment);
       setProgress(current);
@@ -28,8 +27,8 @@ export default function Preloader({ onComplete }: PreloaderProps) {
           if (preloaderRef.current) {
             gsap.to(preloaderRef.current, {
               opacity: 0,
-              y: -40,
-              duration: 0.8,
+              y: -30,
+              duration: 0.7,
               ease: 'power3.inOut',
               onComplete: () => {
                 setIsDone(true);
@@ -37,7 +36,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
               },
             });
           }
-        }, 300);
+        }, 250);
       }
     }, 35);
 
@@ -45,7 +44,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
     if (beanRef.current) {
       gsap.to(beanRef.current, {
         rotationY: 360,
-        rotationZ: 12,
+        rotationZ: 10,
         duration: 3,
         repeat: -1,
         ease: 'none',
@@ -61,24 +60,24 @@ export default function Preloader({ onComplete }: PreloaderProps) {
   return (
     <div
       ref={preloaderRef}
-      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#0B0705] text-[#F5E6D0] select-none"
+      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#FBF9F5] text-[#2B2421] select-none"
       style={{ perspective: '1000px' }}
     >
-      {/* Background ambient amber glow */}
+      {/* Background ambient warm paper glow */}
       <div
-        className="absolute w-96 h-96 rounded-full bg-[#D89B5A]/10 blur-[120px] pointer-events-none"
+        className="absolute w-96 h-96 rounded-full bg-[#A8583B]/10 blur-[120px] pointer-events-none"
         aria-hidden="true"
       />
 
-      {/* Rotating Coffee Bean with Golden Highlight */}
+      {/* Rotating Coffee Bean with Golden & Terracotta Highlights */}
       <div className="relative mb-8 flex items-center justify-center">
         {/* Pulsing ring */}
-        <div className="absolute w-24 h-24 rounded-full border border-[#D89B5A]/20 animate-ping opacity-25" />
-        <div className="absolute w-20 h-20 rounded-full border border-[#C9A86C]/30 blur-[1px]" />
+        <div className="absolute w-24 h-24 rounded-full border border-[#A8583B]/20 animate-ping opacity-30" />
+        <div className="absolute w-20 h-20 rounded-full border border-[#C9A86C]/40 blur-[1px]" />
 
         <svg
           ref={beanRef}
-          className="w-16 h-16 drop-shadow-[0_0_20px_rgba(216,155,90,0.5)]"
+          className="w-16 h-16 drop-shadow-[0_8px_20px_rgba(168,88,59,0.25)]"
           viewBox="0 0 100 100"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -91,8 +90,8 @@ export default function Preloader({ onComplete }: PreloaderProps) {
           {/* Specular rim */}
           <path
             d="M50 10C27.9 10 10 27.9 10 50C10 58.5 12.6 66.4 17.2 73C14 66.2 12.2 58.4 12.2 50C12.2 29.1 29.1 12.2 50 12.2C61.4 12.2 71.6 17.3 78.4 25.4C71.3 16 61.4 10 50 10Z"
-            fill="#D89B5A"
-            fillOpacity="0.6"
+            fill="#C9A86C"
+            fillOpacity="0.7"
           />
           {/* S-curve crease */}
           <path
@@ -103,14 +102,14 @@ export default function Preloader({ onComplete }: PreloaderProps) {
           />
           <defs>
             <linearGradient id="beanGradient" x1="15" y1="15" x2="85" y2="85" gradientUnits="userSpaceOnUse">
-              <stop stopColor="#3D2619" />
-              <stop offset="0.5" stopColor="#2A180E" />
-              <stop offset="1" stopColor="#140A05" />
+              <stop stopColor="#A8583B" />
+              <stop offset="0.6" stopColor="#5A2E1F" />
+              <stop offset="1" stopColor="#2B2421" />
             </linearGradient>
             <linearGradient id="creaseGradient" x1="50" y1="14" x2="50" y2="88" gradientUnits="userSpaceOnUse">
-              <stop stopColor="#0B0705" />
-              <stop offset="0.5" stopColor="#D89B5A" />
-              <stop offset="1" stopColor="#0B0705" />
+              <stop stopColor="#2B2421" />
+              <stop offset="0.5" stopColor="#C9A86C" />
+              <stop offset="1" stopColor="#2B2421" />
             </linearGradient>
           </defs>
         </svg>
@@ -118,25 +117,25 @@ export default function Preloader({ onComplete }: PreloaderProps) {
 
       {/* Brand Title */}
       <div className="text-center">
-        <h2 className="text-xl md:text-2xl font-serif tracking-[0.4em] uppercase text-[#F5E6D0] mb-1">
+        <h2 className="text-xl md:text-2xl font-serif tracking-[0.3em] uppercase text-[#2B2421] mb-1 font-bold">
           Kinetics Caffe
         </h2>
-        <p className="text-[10px] tracking-[0.3em] uppercase text-[#C9A86C]/70 font-light mb-8">
+        <p className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#A8583B] font-semibold mb-8">
           Artisan Coffee Roastery
         </p>
       </div>
 
       {/* Percentage Progress Bar */}
       <div className="w-56 flex flex-col items-center gap-3">
-        <div className="w-full h-[2px] bg-[#2A1F1A] rounded-full overflow-hidden relative">
+        <div className="w-full h-[2px] bg-[#2B2421]/15 rounded-full overflow-hidden relative">
           <div
-            className="h-full bg-gradient-to-r from-[#B8722E] via-[#D89B5A] to-[#F5E6D0] transition-all duration-150 ease-out shadow-[0_0_12px_rgba(216,155,90,0.8)]"
+            className="h-full bg-gradient-to-r from-[#A8583B] via-[#C9A86C] to-[#2B2421] transition-all duration-150 ease-out shadow-[0_0_8px_rgba(168,88,59,0.5)]"
             style={{ width: `${progress}%` }}
           />
         </div>
-        <div className="flex justify-between w-full text-xs font-mono text-[#D89B5A]/80 tracking-widest">
+        <div className="flex justify-between w-full text-xs font-mono text-[#5A5049] tracking-widest font-medium">
           <span>ROASTING</span>
-          <span>{progress}%</span>
+          <span className="text-[#A8583B] font-semibold">{progress}%</span>
         </div>
       </div>
     </div>

@@ -36,7 +36,7 @@ export default function CursorFollower() {
         outerRingRef.current.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
         // Subtle color shift on rapid cursor movement
         const vel = Math.min(cursorTracker.velocity * 2, 1);
-        outerRingRef.current.style.borderColor = vel > 0.3 ? '#D89B5A' : 'rgba(245, 230, 208, 0.4)';
+        outerRingRef.current.style.borderColor = vel > 0.3 ? '#A8583B' : 'rgba(43, 36, 33, 0.25)';
       }
 
       rafId = requestAnimationFrame(render);
@@ -54,12 +54,12 @@ export default function CursorFollower() {
       {/* Smooth outer ring */}
       <div
         ref={outerRingRef}
-        className="fixed top-0 left-0 w-8 h-8 rounded-full border border-[rgba(245,230,208,0.4)] pointer-events-none z-[9990] will-change-transform transition-colors duration-150"
+        className="fixed top-0 left-0 w-8 h-8 rounded-full border border-[rgba(43,36,33,0.25)] pointer-events-none z-[9990] will-change-transform transition-colors duration-150"
       />
       {/* Crisp inner dot */}
       <div
         ref={innerDotRef}
-        className="fixed top-0 left-0 w-2 h-2 rounded-full bg-[#D89B5A] pointer-events-none z-[9990] will-change-transform shadow-[0_0_8px_rgba(216,155,90,0.8)]"
+        className="fixed top-0 left-0 w-2 h-2 rounded-full bg-[#A8583B] pointer-events-none z-[9990] will-change-transform shadow-[0_0_6px_rgba(168,88,59,0.5)]"
       />
     </>
   );

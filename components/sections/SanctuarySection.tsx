@@ -3,51 +3,66 @@
 import React, { useState } from 'react';
 import { useSceneStore, TableBooking } from '@/store/useSceneStore';
 
-const TABLES = [
-  { id: 'B1', zone: 'bar', x: 20, y: 30, seats: 2, status: 'available' },
-  { id: 'B2', zone: 'bar', x: 20, y: 50, seats: 2, status: 'available' },
-  { id: 'B3', zone: 'bar', x: 20, y: 70, seats: 2, status: 'reserved' },
-  { id: 'B4', zone: 'bar', x: 40, y: 40, seats: 2, status: 'available' },
-  { id: 'L1', zone: 'lounge', x: 60, y: 30, seats: 4, status: 'available' },
-  { id: 'L2', zone: 'lounge', x: 60, y: 70, seats: 4, status: 'available' },
-  { id: 'L3', zone: 'lounge', x: 80, y: 50, seats: 6, status: 'reserved' },
-  { id: 'W1', zone: 'window', x: 30, y: 15, seats: 2, status: 'available' },
-  { id: 'W2', zone: 'window', x: 70, y: 15, seats: 2, status: 'available' },
-  { id: 'T1', zone: 'terrace', x: 85, y: 25, seats: 4, status: 'available' },
-  { id: 'T2', zone: 'terrace', x: 85, y: 75, seats: 4, status: 'available' }
+interface TableDef {
+  id: string;
+  zone: 'Bar' | 'Lounge' | 'Terrace' | 'Roastery';
+  x: number;
+  y: number;
+  seats: number;
+  status: 'available' | 'reserved';
+  view: string;
+}
+
+const TABLES: TableDef[] = [
+  { id: 'B1', zone: 'Bar', x: 20, y: 30, seats: 2, status: 'available', view: 'Front view of Slayer Espresso Bar' },
+  { id: 'B2', zone: 'Bar', x: 20, y: 50, seats: 2, status: 'available', view: 'Adjacent to Cold Drip Towers' },
+  { id: 'B3', zone: 'Bar', x: 20, y: 70, seats: 2, status: 'reserved', view: 'Hand Pour Slow Bar counter' },
+  { id: 'B4', zone: 'Bar', x: 40, y: 40, seats: 2, status: 'available', view: 'Center Bar with high wooden stools' },
+  { id: 'L1', zone: 'Lounge', x: 60, y: 30, seats: 4, status: 'available', view: 'Plush velvet sofa & marble coffee table' },
+  { id: 'L2', zone: 'Lounge', x: 60, y: 70, seats: 4, status: 'available', view: 'Cozy book nook & ambient warm lighting' },
+  { id: 'L3', zone: 'Lounge', x: 80, y: 50, seats: 6, status: 'reserved', view: 'Private banquette seating for groups' },
+  { id: 'W1', zone: 'Terrace', x: 30, y: 15, seats: 2, status: 'available', view: 'Sunlit window canopy overlooking gardens' },
+  { id: 'W2', zone: 'Terrace', x: 70, y: 15, seats: 2, status: 'available', view: 'Panoramic glass facade with morning sun' },
+  { id: 'T1', zone: 'Terrace', x: 85, y: 25, seats: 4, status: 'available', view: 'Outdoor teak pergola with herb planters' },
+  { id: 'T2', zone: 'Terrace', x: 85, y: 75, seats: 4, status: 'available', view: 'Breezy courtyard terrace seating' }
 ];
 
-const DATES = ['Today', 'Tomorrow', 'Weekend'];
+const DATES = ['Today', 'Tomorrow', 'This Weekend'];
 const TIME_SLOTS = ['8:30 AM', '11:00 AM', '2:30 PM', '5:00 PM', '7:30 PM', '9:00 PM'];
-const PARTY_SIZES = [1, 2, 4, 6];
+const PARTY_SIZES = [
+  { count: 1, label: '1 Guest' },
+  { count: 2, label: '2 Guests' },
+  { count: 4, label: '4 Guests' },
+  { count: 6, label: '6 Guests' }
+];
 
 export default function SanctuarySection() {
   const setBooking = useSceneStore((state) => state.setBooking);
   
-  const [selectedTable, setSelectedTable] = useState<string | null>(null);
+  const [selectedTableId, setSelectedTableId] = useState<string>('B1');
   const [date, setDate] = useState(DATES[0]);
   const [time, setTime] = useState(TIME_SLOTS[1]);
-  const [partySize, setPartySize] = useState(PARTY_SIZES[1]);
+  const [partySize, setPartySize] = useState(2);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [confirmation, setConfirmation] = useState<string | null>(null);
 
+  const selectedTable = TABLES.find(t => t.id === selectedTableId) || TABLES[0];
+
   const handleBooking = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!selectedTable || !name || !phone) return;
+    if (!selectedTableId || !name || !phone) return;
     
     setIsSubmitting(true);
     
-    // Simulate API call
     setTimeout(() => {
       const bookingId = `RES-${Math.floor(1000 + Math.random() * 9000)}`;
-      const tableObj = TABLES.find(t => t.id === selectedTable);
       
       const newBooking: TableBooking = {
-        tableId: selectedTable,
-        tableName: `Table ${selectedTable}`,
-        zone: tableObj ? tableObj.zone.toUpperCase() : 'MAIN',
+        tableId: selectedTableId,
+        tableName: `Table ${selectedTableId} (${selectedTable.zone})`,
+        zone: selectedTable.zone.toUpperCase(),
         date,
         timeSlot: time,
         guests: partySize,
@@ -58,206 +73,240 @@ export default function SanctuarySection() {
       setBooking(newBooking);
       setConfirmation(bookingId);
       setIsSubmitting(false);
-    }, 800);
+    }, 700);
   };
 
   return (
-    <section id="sanctuary" className="bg-[#FBF9F5] text-[#2B2421] py-28 px-6 sm:px-8 lg:px-12 w-full transition-colors duration-700 font-sans">
+    <section id="sanctuary" className="bg-theme-sanctuary text-[#2B2421] py-28 px-6 sm:px-8 lg:px-12 w-full transition-colors duration-700 font-sans">
       <div className="max-w-7xl mx-auto flex flex-col">
         
         {/* Header */}
-        <div className="mb-16">
-          <span className="text-[11px] font-mono text-[#A8583B] tracking-[0.3em] uppercase block mb-3 font-semibold">
-            04 &middot; SANCTUARY &amp; ATMOSPHERE
-          </span>
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-serif text-[#2B2421] mb-6 tracking-wide">Our Space</h2>
-          <p className="text-[#5A5049] text-base sm:text-lg max-w-2xl font-light leading-relaxed">
-            Experience the flagship sanctuary. A multi-sensory environment designed to elevate your coffee journey, featuring organic textures, soft warm paper hues, and dedicated slow brew bars.
+        <div className="mb-16 max-w-2xl">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-teal-100 border border-teal-300 text-teal-800 text-xs font-mono font-bold tracking-widest uppercase mb-3 shadow-2xs">
+            <span>🛋️</span>
+            <span>SANCTUARY &amp; ATMOSPHERE</span>
+          </div>
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-serif text-[#2B2421] mb-4 tracking-tight">
+            Reserve Your Sanctuary
+          </h2>
+          <p className="text-slate-600 text-base sm:text-lg font-light leading-relaxed">
+            Choose your preferred corner on our live floor plan—from sunlit window canopies to the intimate Slayer espresso bar.
           </p>
         </div>
 
-        {/* PART 1: Immersive Gallery */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
-          <div className="lg:col-span-2 h-80 bg-[#F2EDE4] border border-[#2B2421]/15 rounded-2xl p-0 overflow-hidden group relative transition-colors duration-500 shadow-sm">
+        {/* PART 1: Visual Atmosphere Gallery */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+          <div className="md:col-span-2 h-72 sm:h-80 glass-card p-0 overflow-hidden group relative shadow-md border-amber-200/60">
             <img 
-              src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80" 
+              src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=900&q=80" 
               alt="The Slayer Espresso Bar"
-              className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#2B2421]/80 via-[#2B2421]/20 to-transparent"></div>
-            <div className="absolute bottom-6 left-6">
-              <span className="text-[10px] font-mono text-[#C9A86C] uppercase tracking-wider mb-2 block font-semibold">Zone 01</span>
-              <h3 className="text-2xl font-serif text-[#FBF9F5]">The Slayer Espresso Bar</h3>
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/30 to-transparent"></div>
+            <div className="absolute bottom-6 left-6 text-white">
+              <span className="text-[11px] font-mono text-amber-300 uppercase tracking-widest mb-1 block font-bold">Zone 01 · Hand Pour Bar</span>
+              <h3 className="text-2xl font-serif font-bold">The Slayer Espresso Bar</h3>
+              <p className="text-xs text-white/80 font-light mt-1">Direct front-row seating to specialty extraction</p>
             </div>
           </div>
           
           <div className="flex flex-col gap-6">
-            <div className="h-[152px] bg-[#F2EDE4] border border-[#2B2421]/15 rounded-2xl p-0 overflow-hidden group relative shadow-sm">
+            <div className="h-[148px] glass-card p-0 overflow-hidden group relative shadow-sm border-teal-200/60">
               <img 
-                src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=800&q=80" 
+                src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=600&q=80" 
                 alt="Sunlit Window Canopy"
-                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#2B2421]/80 via-[#2B2421]/20 to-transparent"></div>
-              <div className="absolute bottom-4 left-4">
-                <h3 className="text-lg font-serif text-[#FBF9F5]">Sunlit Canopy</h3>
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
+              <div className="absolute bottom-3 left-4 text-white">
+                <h4 className="text-base font-serif font-bold">Sunlit Window Canopy</h4>
+                <span className="text-[10px] font-mono text-teal-300">Natural morning sun</span>
               </div>
             </div>
-            <div className="h-[152px] bg-[#F2EDE4] border border-[#2B2421]/15 rounded-2xl p-0 overflow-hidden group relative shadow-sm">
+
+            <div className="h-[148px] glass-card p-0 overflow-hidden group relative shadow-sm border-emerald-200/60">
               <img 
-                src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80" 
-                alt="Terrazzo Oak Garden"
-                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=600&q=80" 
+                alt="Terrazzo Oak Courtyard"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#2B2421]/80 via-[#2B2421]/20 to-transparent"></div>
-              <div className="absolute bottom-4 left-4">
-                <h3 className="text-lg font-serif text-[#FBF9F5]">Terrazzo Garden</h3>
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
+              <div className="absolute bottom-3 left-4 text-white">
+                <h4 className="text-base font-serif font-bold">Terrazzo Courtyard</h4>
+                <span className="text-[10px] font-mono text-emerald-300">Breezy outdoor terrace</span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* PART 2: Table Reservation */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mt-4">
+        {/* PART 2: Interactive Live Floor Map & Instant Booking */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           
-          {/* Floor Map */}
-          <div className="lg:col-span-7 bg-[#F2EDE4] border border-[#2B2421]/15 rounded-2xl p-8 relative overflow-hidden shadow-sm">
-            <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9InJnYmEoNDMsIDM2LCAzMywgMC4xNSkiLz48L3N2Zz4=')] opacity-50"></div>
+          {/* Left Column: Interactive Floor Map */}
+          <div className="lg:col-span-7 glass-card p-6 sm:p-8 relative overflow-hidden border-teal-200/60 shadow-md">
             
-            <div className="relative h-[450px] w-full bg-white/60 rounded-xl border border-[#2B2421]/15 mb-6 backdrop-blur-md shadow-sm">
-              {/* Zones */}
-              <div className="absolute top-4 left-4 text-[10px] font-mono text-[#5A5049] font-bold uppercase tracking-wider">Espresso Bar</div>
-              <div className="absolute bottom-4 left-4 text-[10px] font-mono text-[#5A5049] font-bold uppercase tracking-wider">Lounge</div>
-              <div className="absolute top-4 right-4 text-[10px] font-mono text-[#5A5049] font-bold uppercase tracking-wider">Terrace</div>
-              <div className="absolute bottom-4 right-4 text-[10px] font-mono text-[#5A5049] font-bold uppercase tracking-wider">Roastery View</div>
+            <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3 mb-6">
+              <div>
+                <h3 className="text-lg font-serif font-bold text-slate-800">Interactive Floor Plan</h3>
+                <p className="text-xs text-slate-500">Tap any available green table to select your spot</p>
+              </div>
 
-              {/* Tables */}
+              {/* Status Legend */}
+              <div className="flex items-center gap-4 text-xs font-mono">
+                <div className="flex items-center gap-1.5">
+                  <div className="w-3 h-3 rounded-full bg-emerald-500 shadow-xs"></div>
+                  <span className="text-slate-600 font-medium">Available</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <div className="w-3 h-3 rounded-full bg-amber-500 ring-2 ring-amber-300 shadow-xs"></div>
+                  <span className="text-slate-900 font-bold">Selected</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <div className="w-3 h-3 rounded-full bg-rose-400 opacity-60"></div>
+                  <span className="text-slate-400">Reserved</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Map Canvas */}
+            <div className="relative h-[420px] w-full bg-slate-900/5 rounded-2xl border border-slate-300/70 overflow-hidden shadow-inner">
+              {/* Floor Plan Zone Labels */}
+              <div className="absolute top-4 left-4 text-[10px] font-mono font-bold text-slate-600 bg-white/80 px-2.5 py-1 rounded-md border shadow-2xs uppercase">
+                ☕ Espresso Bar
+              </div>
+              <div className="absolute bottom-4 left-4 text-[10px] font-mono font-bold text-slate-600 bg-white/80 px-2.5 py-1 rounded-md border shadow-2xs uppercase">
+                🛋️ Velvet Lounge
+              </div>
+              <div className="absolute top-4 right-4 text-[10px] font-mono font-bold text-slate-600 bg-white/80 px-2.5 py-1 rounded-md border shadow-2xs uppercase">
+                🌿 Garden Terrace
+              </div>
+              <div className="absolute bottom-4 right-4 text-[10px] font-mono font-bold text-slate-600 bg-white/80 px-2.5 py-1 rounded-md border shadow-2xs uppercase">
+                🏭 Roastery View
+              </div>
+
+              {/* Table Marker Buttons */}
               {TABLES.map(table => {
-                const isSelected = selectedTable === table.id;
+                const isSelected = selectedTableId === table.id;
                 const isReserved = table.status === 'reserved';
                 
-                let bgColor = 'bg-white';
-                let borderColor = 'border-[#2B2421]/20';
-                let textColor = 'text-[#2B2421]';
-                
+                let markerBg = 'bg-emerald-500 hover:bg-emerald-600 text-white';
                 if (isSelected) {
-                  bgColor = 'bg-[#A8583B]';
-                  borderColor = 'border-[#A8583B]';
-                  textColor = 'text-white';
+                  markerBg = 'bg-amber-500 text-slate-950 ring-4 ring-amber-300 shadow-lg scale-110';
                 } else if (isReserved) {
-                  bgColor = 'bg-[#2B2421]/10';
-                  borderColor = 'border-[#2B2421]/10';
-                  textColor = 'text-[#2B2421]/30';
+                  markerBg = 'bg-rose-300 text-rose-800 opacity-60 cursor-not-allowed';
                 }
 
                 return (
                   <button
                     key={table.id}
                     disabled={isReserved}
-                    onClick={() => setSelectedTable(table.id)}
-                    className={`absolute flex items-center justify-center rounded-full transition-all duration-300 ${bgColor} border ${borderColor} ${
-                      !isReserved && !isSelected ? 'hover:border-[#A8583B] hover:bg-white shadow-sm' : ''
-                    } ${isSelected ? 'shadow-md ring-2 ring-[#A8583B]/30' : ''} ${textColor} ${isReserved ? 'opacity-50' : ''} cursor-pointer`}
+                    onClick={() => setSelectedTableId(table.id)}
+                    className={`absolute flex items-center justify-center rounded-full font-mono text-xs font-bold transition-all duration-300 shadow-sm ${markerBg}`}
                     style={{ 
                       left: `${table.x}%`, 
                       top: `${table.y}%`,
-                      width: table.seats > 2 ? '48px' : '36px',
-                      height: table.seats > 2 ? '48px' : '36px',
+                      width: table.seats > 2 ? '46px' : '38px',
+                      height: table.seats > 2 ? '46px' : '38px',
                       transform: 'translate(-50%, -50%)',
                       cursor: isReserved ? 'not-allowed' : 'pointer'
                     }}
+                    title={`${table.id} (${table.seats} Seats) - ${table.view}`}
                   >
-                    <span className="text-[10px] font-mono font-bold">{table.id}</span>
+                    <span>{table.id}</span>
                   </button>
                 );
               })}
             </div>
-            
-            <div className="flex gap-6 justify-center">
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-white border border-[#2B2421]/20 shadow-sm"></div>
-                <span className="text-xs font-mono text-[#5A5049] font-medium">Available</span>
+
+            {/* Currently Selected Table Info Pill */}
+            <div className="mt-4 p-4 rounded-xl bg-amber-50/80 border border-amber-200 flex flex-col sm:flex-row justify-between sm:items-center gap-2">
+              <div>
+                <span className="text-[10px] font-mono font-bold text-amber-800 uppercase tracking-widest block">
+                  SELECTED: TABLE {selectedTable.id} &middot; {selectedTable.zone.toUpperCase()} ZONE
+                </span>
+                <p className="text-xs text-slate-700 font-medium mt-0.5">{selectedTable.view}</p>
               </div>
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-[#A8583B] border border-[#A8583B]"></div>
-                <span className="text-xs font-mono text-[#5A5049] font-medium">Selected</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-[#2B2421]/10 border border-[#2B2421]/15 opacity-60"></div>
-                <span className="text-xs font-mono text-[#5A5049] font-medium">Reserved</span>
-              </div>
+              <span className="px-3 py-1 rounded-full bg-amber-200/70 text-amber-900 text-xs font-mono font-bold w-max">
+                Up to {selectedTable.seats} Guests
+              </span>
             </div>
           </div>
 
-          {/* Booking Form */}
-          <div className="lg:col-span-5 flex flex-col justify-center bg-[#F2EDE4] border border-[#2B2421]/15 rounded-2xl p-8 shadow-sm">
+          {/* Right Column: User-Friendly Reservation Form */}
+          <div className="lg:col-span-5 glass-card p-6 sm:p-8 border-amber-200/60 shadow-md">
             {confirmation ? (
-              <div className="text-center flex flex-col items-center">
-                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-6 border border-[#2B2421]/15 shadow-sm">
-                  <svg className="w-8 h-8 text-[#A8583B]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+              <div className="text-center flex flex-col items-center py-4 animate-fade-in-up">
+                <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mb-4 text-emerald-600 shadow-sm border border-emerald-200">
+                  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <h3 className="text-2xl font-serif text-[#2B2421] mb-2 font-bold">Sanctuary Secured</h3>
-                <p className="text-[#5A5049] mb-8 font-light text-sm">We look forward to hosting you, {name}.</p>
-                <div className="bg-white p-6 rounded-xl border border-[#2B2421]/15 w-full mb-8 shadow-sm">
-                  <div className="flex justify-between mb-4 border-b border-[#2B2421]/10 pb-4">
-                    <span className="font-mono text-[#5A5049] text-xs font-semibold">TOKEN</span>
-                    <span className="font-mono text-[#A8583B] text-xs font-bold">{confirmation}</span>
-                  </div>
-                  <div className="flex justify-between mb-2">
-                    <span className="font-mono text-[#5A5049] text-xs font-medium">TABLE</span>
-                    <span className="font-mono text-[#2B2421] text-xs font-bold">{selectedTable}</span>
-                  </div>
-                  <div className="flex justify-between mb-2">
-                    <span className="font-mono text-[#5A5049] text-xs font-medium">TIME</span>
-                    <span className="font-mono text-[#2B2421] text-xs font-bold">{date}, {time}</span>
+                <h3 className="text-2xl font-serif text-[#2B2421] mb-1 font-bold">Sanctuary Reserved!</h3>
+                <p className="text-slate-600 mb-6 font-light text-xs">We have reserved Table {selectedTableId} for {name}.</p>
+                
+                <div className="bg-white p-5 rounded-2xl border border-slate-200 w-full mb-6 shadow-sm space-y-2 text-xs font-mono">
+                  <div className="flex justify-between pb-2 border-b border-slate-100">
+                    <span className="text-slate-500 font-semibold">BOOKING TOKEN</span>
+                    <span className="text-amber-700 font-bold">{confirmation}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="font-mono text-[#5A5049] text-xs font-medium">GUESTS</span>
-                    <span className="font-mono text-[#2B2421] text-xs font-bold">{partySize}</span>
+                    <span className="text-slate-500">TABLE</span>
+                    <span className="text-slate-800 font-bold">Table {selectedTableId} ({selectedTable.zone})</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-500">DATE &amp; TIME</span>
+                    <span className="text-slate-800 font-bold">{date}, {time}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-500">PARTY SIZE</span>
+                    <span className="text-slate-800 font-bold">{partySize} Guests</span>
                   </div>
                 </div>
-                <button 
-                  onClick={() => {
-                    setConfirmation(null);
-                    setSelectedTable(null);
-                    setName('');
-                    setPhone('');
-                  }}
-                  className="w-full py-3.5 rounded-full border border-[#2B2421]/20 text-[#2B2421] bg-white font-medium text-xs uppercase tracking-widest transition-all hover:bg-[#2B2421] hover:text-[#FBF9F5] cursor-pointer shadow-sm"
-                >
-                  Book Another Table
-                </button>
+
+                <div className="flex flex-col gap-2.5 w-full">
+                  <a
+                    href={`https://wa.me/919352457597?text=Hello%20Kinetics%20Caffe,%20I%20have%20booked%20Table%20${selectedTableId}%20with%20Token%20${confirmation}%20for%20${name}.`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-tactile w-full py-3 rounded-full bg-[#25D366] text-white font-bold text-xs uppercase tracking-wider text-center flex items-center justify-center gap-2 shadow-sm"
+                  >
+                    <span>Receive Confirmation on WhatsApp</span>
+                  </a>
+                  
+                  <button 
+                    onClick={() => {
+                      setConfirmation(null);
+                      setName('');
+                      setPhone('');
+                    }}
+                    className="btn-tactile w-full py-3 rounded-full border border-slate-300 text-slate-700 font-semibold text-xs uppercase tracking-wider hover:bg-slate-100 cursor-pointer"
+                  >
+                    Book Another Table
+                  </button>
+                </div>
               </div>
             ) : (
-              <form onSubmit={handleBooking} className="flex flex-col gap-6">
+              <form onSubmit={handleBooking} className="flex flex-col gap-5">
                 <div>
-                  <h3 className="text-2xl sm:text-3xl font-serif text-[#2B2421] mb-1 font-bold">Reserve a Table</h3>
-                  <p className="text-[#5A5049] text-xs font-light">Select your preferred setting in our immersive space.</p>
+                  <h3 className="text-2xl font-serif text-[#2B2421] font-bold">Table Reservation</h3>
+                  <p className="text-slate-500 text-xs font-light mt-0.5">Instant booking confirmation with zero reservation fees.</p>
                 </div>
 
                 {/* Date Selection */}
                 <div>
-                  <label className="flex items-center gap-2 text-xs font-mono text-[#5A5049] font-semibold uppercase mb-2.5">
-                    <svg className="w-3.5 h-3.5 text-[#A8583B]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                      <line x1="16" y1="2" x2="16" y2="6" />
-                      <line x1="8" y1="2" x2="8" y2="6" />
-                      <line x1="3" y1="10" x2="21" y2="10" />
-                    </svg>
-                    Date
+                  <label className="text-xs font-mono text-slate-700 font-bold uppercase mb-2 block">
+                    1. Select Date
                   </label>
-                  <div className="flex gap-2">
+                  <div className="grid grid-cols-3 gap-2">
                     {DATES.map(d => (
                       <button
                         key={d}
                         type="button"
                         onClick={() => setDate(d)}
-                        className={`flex-1 py-2.5 rounded-xl text-xs transition-all border font-medium cursor-pointer ${
+                        className={`py-2 rounded-xl text-xs font-medium transition-all border cursor-pointer ${
                           date === d 
-                            ? 'bg-white border-[#A8583B] text-[#2B2421] shadow-sm font-semibold' 
-                            : 'bg-transparent border-[#2B2421]/15 text-[#5A5049] hover:border-[#A8583B]/50 hover:bg-white/50'
+                            ? 'bg-amber-600 border-amber-600 text-white font-bold shadow-xs' 
+                            : 'bg-white/80 border-slate-200 text-slate-600 hover:border-amber-400'
                         }`}
                       >
                         {d}
@@ -268,12 +317,8 @@ export default function SanctuarySection() {
 
                 {/* Time Selection */}
                 <div>
-                  <label className="flex items-center gap-2 text-xs font-mono text-[#5A5049] font-semibold uppercase mb-2.5">
-                    <svg className="w-3.5 h-3.5 text-[#A8583B]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                      <circle cx="12" cy="12" r="10" />
-                      <polyline points="12 6 12 12 16 14" />
-                    </svg>
-                    Time Slot
+                  <label className="text-xs font-mono text-slate-700 font-bold uppercase mb-2 block">
+                    2. Select Time Slot
                   </label>
                   <div className="grid grid-cols-3 gap-2">
                     {TIME_SLOTS.map(t => (
@@ -281,10 +326,10 @@ export default function SanctuarySection() {
                         key={t}
                         type="button"
                         onClick={() => setTime(t)}
-                        className={`py-2 rounded-xl text-xs font-mono transition-all border font-medium cursor-pointer ${
+                        className={`py-2 rounded-xl text-xs font-mono transition-all border cursor-pointer ${
                           time === t 
-                            ? 'bg-white border-[#A8583B] text-[#2B2421] shadow-sm font-semibold' 
-                            : 'bg-transparent border-[#2B2421]/15 text-[#5A5049] hover:border-[#A8583B]/50 hover:bg-white/50'
+                            ? 'bg-amber-600 border-amber-600 text-white font-bold shadow-xs' 
+                            : 'bg-white/80 border-slate-200 text-slate-600 hover:border-amber-400'
                         }`}
                       >
                         {t}
@@ -295,77 +340,70 @@ export default function SanctuarySection() {
 
                 {/* Party Size */}
                 <div>
-                  <label className="flex items-center gap-2 text-xs font-mono text-[#5A5049] font-semibold uppercase mb-2.5">
-                    <svg className="w-3.5 h-3.5 text-[#A8583B]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4-4v2" />
-                      <circle cx="9" cy="7" r="4" />
-                      <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                    </svg>
-                    Party Size
+                  <label className="text-xs font-mono text-slate-700 font-bold uppercase mb-2 block">
+                    3. Party Size
                   </label>
-                  <div className="flex gap-2">
-                    {PARTY_SIZES.map(s => (
+                  <div className="grid grid-cols-4 gap-2">
+                    {PARTY_SIZES.map(p => (
                       <button
-                        key={s}
+                        key={p.count}
                         type="button"
-                        onClick={() => setPartySize(s)}
-                        className={`flex-1 py-2.5 rounded-xl text-xs font-mono transition-all border font-medium cursor-pointer ${
-                          partySize === s 
-                            ? 'bg-white border-[#A8583B] text-[#2B2421] shadow-sm font-semibold' 
-                            : 'bg-transparent border-[#2B2421]/15 text-[#5A5049] hover:border-[#A8583B]/50 hover:bg-white/50'
+                        onClick={() => setPartySize(p.count)}
+                        className={`py-2 rounded-xl text-xs font-mono transition-all border cursor-pointer ${
+                          partySize === p.count 
+                            ? 'bg-amber-600 border-amber-600 text-white font-bold shadow-xs' 
+                            : 'bg-white/80 border-slate-200 text-slate-600 hover:border-amber-400'
                         }`}
                       >
-                        {s} {s === 1 ? 'Guest' : 'Guests'}
+                        {p.label}
                       </button>
                     ))}
                   </div>
                 </div>
 
-                {/* Details */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {/* Guest Details */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
                   <div>
-                    <label className="flex items-center gap-2 text-xs font-mono text-[#5A5049] font-semibold uppercase mb-2">
-                      Name
+                    <label className="text-xs font-mono text-slate-700 font-semibold uppercase mb-1.5 block">
+                      Your Name
                     </label>
                     <input
                       type="text"
                       required
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      className="w-full bg-white border border-[#2B2421]/20 rounded-xl px-4 py-2.5 text-[#2B2421] text-xs focus:outline-none focus:border-[#A8583B] transition-colors shadow-sm"
-                      placeholder="Your Name"
+                      className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-slate-800 text-xs focus:outline-none focus:border-amber-600 shadow-2xs"
+                      placeholder="e.g. Nilesh Rajani"
                     />
                   </div>
                   <div>
-                    <label className="flex items-center gap-2 text-xs font-mono text-[#5A5049] font-semibold uppercase mb-2">
-                      Phone
+                    <label className="text-xs font-mono text-slate-700 font-semibold uppercase mb-1.5 block">
+                      Phone Number
                     </label>
                     <input
                       type="tel"
                       required
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      className="w-full bg-white border border-[#2B2421]/20 rounded-xl px-4 py-2.5 text-[#2B2421] text-xs focus:outline-none focus:border-[#A8583B] transition-colors shadow-sm"
-                      placeholder="+91..."
+                      className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-slate-800 text-xs focus:outline-none focus:border-amber-600 shadow-2xs"
+                      placeholder="+91 93524 57597"
                     />
                   </div>
                 </div>
 
+                {/* Confirmation Button */}
                 <button
                   type="submit"
-                  disabled={!selectedTable || !name || !phone || isSubmitting}
-                  className={`w-full py-3.5 rounded-full font-medium text-xs uppercase tracking-[0.15em] transition-all border cursor-pointer ${
-                    !selectedTable || !name || !phone 
-                      ? 'bg-[#2B2421]/5 border-[#2B2421]/10 text-[#2B2421]/40 cursor-not-allowed'
-                      : 'bg-[#2B2421] border-[#2B2421] text-[#FBF9F5] hover:bg-[#A8583B] hover:border-[#A8583B] shadow-sm'
+                  disabled={!selectedTableId || !name || !phone || isSubmitting}
+                  className={`btn-tactile w-full py-3.5 rounded-full font-bold text-xs uppercase tracking-wider transition-all border cursor-pointer shadow-sm mt-1 ${
+                    !selectedTableId || !name || !phone 
+                      ? 'bg-slate-200 border-slate-200 text-slate-400 cursor-not-allowed'
+                      : 'bg-gradient-to-r from-amber-600 to-rose-600 border-transparent text-white hover:brightness-105'
                   }`}
                 >
                   {isSubmitting 
-                    ? 'Confirming...' 
-                    : !selectedTable 
-                      ? 'Select a Table on Map' 
-                      : `Confirm Table ${selectedTable} \u2014 ${date}, ${time}`
+                    ? 'Confirming Sanctuary...' 
+                    : `Confirm Table ${selectedTableId} · ${date}, ${time}`
                   }
                 </button>
               </form>

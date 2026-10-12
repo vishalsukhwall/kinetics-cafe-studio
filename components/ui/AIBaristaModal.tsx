@@ -36,7 +36,7 @@ const KNOWLEDGE_BASE = [
     item: {
       id: 'artisanal-affogato',
       name: 'Artisanal Affogato al Caffè',
-      price: 420,
+      price: 380,
       notes: 'Tahitian Vanilla Bean · Hot Ristretto · Salted Toffee',
       origin: 'Estate Special Espresso & House Gelato',
       imageUrl: 'https://images.unsplash.com/photo-1594261956806-3ad03785c9b4?auto=format&fit=crop&w=800&q=80',
@@ -68,18 +68,6 @@ const KNOWLEDGE_BASE = [
     },
   },
   {
-    keywords: ['tonic', 'fizzy', 'sparkling', 'rosemary', 'summer', 'citrus', 'refreshing'],
-    item: {
-      id: 'smoked-vanilla-espresso-tonic',
-      name: 'Smoked Vanilla Espresso Tonic',
-      price: 380,
-      notes: 'Madagascar Vanilla · Quinine Tonic · Charred Citrus',
-      origin: 'Chikmagalur Red Honey · 1,450m',
-      imageUrl: 'https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=800&q=80',
-      reason: 'Looking for effervescence and craft botanicals? Our Smoked Vanilla Espresso Tonic layers crisp tonic water under a floating double shot with charred rosemary smoke.',
-    },
-  },
-  {
     keywords: ['espresso', 'intense', 'short', 'pure', 'quick', 'dark', 'classic', 'crema'],
     item: {
       id: 'single-origin-espresso',
@@ -94,10 +82,10 @@ const KNOWLEDGE_BASE = [
 ];
 
 const SUGGESTION_CHIPS = [
-  'Something strong, nutty, and cold',
-  'Sweet & velvety dessert coffee',
-  'Fruity & floral black pour-over',
-  'Sparkling iced espresso tonic',
+  { text: '🧊 Strong & cold nitro brew', query: 'cold strong nitro' },
+  { text: '🍨 Velvety affogato dessert', query: 'sweet dessert affogato' },
+  { text: '🌸 Floral black pour-over', query: 'fruity floral pour over' },
+  { text: '☕ Classic 9-bar espresso', query: 'intense short espresso' },
 ];
 
 export default function AIBaristaModal() {
@@ -110,7 +98,7 @@ export default function AIBaristaModal() {
     {
       id: 'welcome',
       sender: 'barista',
-      text: "Namaste! I'm your Kinetics Caffe AI Sommelier. Tell me your mood, favorite flavors, or dietary cravings, and I'll match you with the perfect roast from our Western Ghats harvests.",
+      text: "Namaste! I'm your Kinetics Caffe AI Sommelier. Tell me your mood, favorite flavors, or cravings, and I'll match you with the perfect roast from our Western Ghats harvests.",
     },
   ]);
   const [isTyping, setIsTyping] = useState(false);
@@ -135,7 +123,6 @@ export default function AIBaristaModal() {
     setInput('');
     setIsTyping(true);
 
-    // Taste-matching algorithm
     setTimeout(() => {
       const lower = query.toLowerCase();
       let bestMatch = KNOWLEDGE_BASE[0];
@@ -152,7 +139,6 @@ export default function AIBaristaModal() {
         }
       }
 
-      // Default to Flat White if general inquiry
       if (maxScore <= 0) {
         bestMatch = KNOWLEDGE_BASE[2]; // Velvet Flat white
       }
@@ -160,13 +146,13 @@ export default function AIBaristaModal() {
       const baristaReply: Message = {
         id: `barista-${Date.now()}`,
         sender: 'barista',
-        text: `Here is what I've handpicked for you based on "${query}":`,
+        text: `Here is our chef recommendation for you:`,
         recommendation: bestMatch.item,
       };
 
       setMessages((prev) => [...prev, baristaReply]);
       setIsTyping(false);
-    }, 600);
+    }, 550);
   };
 
   const handleAddRecommend = (rec: NonNullable<Message['recommendation']>) => {
@@ -181,20 +167,20 @@ export default function AIBaristaModal() {
 
   return (
     <>
-      {/* Floating AI Barista Trigger Pill (Bottom Left) */}
+      {/* Floating AI Barista Trigger Pill (Bottom Left) with Colorful Glow */}
       <div className="fixed bottom-8 left-8 z-40">
         <button
           onClick={toggleAIBarista}
-          className="btn-tactile flex items-center gap-2.5 px-4 py-3 sm:px-5 sm:py-3.5 rounded-full bg-[#180E09]/95 border border-[#C9A86C]/40 text-[#F5E6D0] hover:border-[#D89B5A] hover:shadow-[0_0_30px_rgba(216,155,90,0.4)] backdrop-blur-xl shadow-2xl transition-all group"
+          className="btn-tactile flex items-center gap-2.5 px-4 sm:px-5 py-3 sm:py-3.5 rounded-full bg-gradient-to-r from-amber-600 to-rose-600 text-white shadow-[0_8px_25px_rgba(217,119,6,0.35)] hover:shadow-[0_12px_35px_rgba(225,29,72,0.45)] hover:scale-105 transition-all cursor-pointer group"
           aria-label="Open AI Barista Sommelier"
         >
-          <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-[#D89B5A] to-[#C9A86C] flex items-center justify-center text-[#0B0705] font-bold text-xs shadow-md">
+          <div className="w-6 h-6 rounded-full bg-white/25 flex items-center justify-center font-bold text-xs shadow-inner">
             ✦
           </div>
-          <span className="text-xs uppercase tracking-widest font-medium text-[#F5E6D0]">
+          <span className="text-xs uppercase tracking-wider font-bold">
             AI Taste-Match
           </span>
-          <span className="hidden sm:inline-block px-1.5 py-0.5 rounded text-[9px] font-mono bg-[#D89B5A]/20 text-[#D89B5A]">
+          <span className="hidden sm:inline-block px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-white text-rose-700 shadow-2xs">
             Barista
           </span>
         </button>
@@ -202,27 +188,30 @@ export default function AIBaristaModal() {
 
       {/* AI Barista Slide-Out Glassmorphic Modal */}
       {isAIBaristaOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-end bg-[#0B0705]/80 backdrop-blur-md">
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-end bg-slate-900/60 backdrop-blur-sm"
+          onClick={toggleAIBarista}
+        >
           <div
-            className="w-full max-w-lg h-full bg-[#140C07]/95 border-l border-[#C9A86C]/30 shadow-2xl flex flex-col justify-between overflow-hidden animate-fade-in-up"
+            className="w-full max-w-lg h-full bg-[#FDFBF7] border-l border-slate-200/90 shadow-2xl flex flex-col justify-between overflow-hidden animate-fade-in-up font-sans"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
-            <div className="p-6 border-b border-[#2A1F1A] flex items-center justify-between bg-[#0B0705]/60 backdrop-blur-md">
+            <div className="p-5 border-b border-slate-200 flex items-center justify-between bg-gradient-to-r from-amber-50 to-rose-50">
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-[#D89B5A] to-[#B8722E] flex items-center justify-center text-[#0B0705] font-bold shadow-lg">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-600 to-rose-600 text-white flex items-center justify-center font-bold text-lg shadow-sm">
                   ✦
                 </div>
                 <div>
-                  <h3 className="font-serif text-lg text-[#F5E6D0]">AI Barista Sommelier</h3>
-                  <p className="text-[10px] font-mono text-[#C9A86C]/80 uppercase tracking-widest">
-                    Western Ghats Flavor Parser
+                  <h3 className="font-serif text-lg text-slate-900 font-bold">AI Barista Sommelier</h3>
+                  <p className="text-[10px] font-mono text-rose-700 uppercase tracking-widest font-bold">
+                    Flavor Parser &middot; Western Ghats
                   </p>
                 </div>
               </div>
               <button
                 onClick={toggleAIBarista}
-                className="w-8 h-8 rounded-full bg-[#1A0F0A] border border-[#C9A86C]/30 text-[#C9A86C] hover:text-[#F5E6D0] flex items-center justify-center transition-colors"
+                className="w-8 h-8 rounded-full bg-white border border-slate-200 text-slate-600 hover:text-slate-900 flex items-center justify-center transition-colors cursor-pointer shadow-xs"
                 aria-label="Close Assistant"
               >
                 ✕
@@ -241,49 +230,49 @@ export default function AIBaristaModal() {
                   <div
                     className={`max-w-[85%] rounded-2xl p-4 text-xs sm:text-sm leading-relaxed ${
                       msg.sender === 'user'
-                        ? 'bg-[#D89B5A] text-[#0B0705] font-medium rounded-br-none shadow-md'
-                        : 'bg-[#1D110A] text-[#F5E6D0] border border-[#C9A86C]/20 rounded-bl-none shadow-lg'
+                        ? 'bg-gradient-to-r from-amber-600 to-rose-600 text-white font-medium rounded-br-none shadow-sm'
+                        : 'bg-white text-slate-800 border border-slate-200 rounded-bl-none shadow-xs'
                     }`}
                   >
                     <p>{msg.text}</p>
                   </div>
 
-                  {/* Rendered Matched Recommendation Card */}
+                  {/* Rendered Recommendation Card with 1-Click Order */}
                   {msg.recommendation && (
-                    <div className="mt-3 w-full max-w-[95%] bg-[#0B0705]/80 border border-[#D89B5A]/50 rounded-2xl overflow-hidden shadow-[0_10px_30px_rgba(216,155,90,0.2)]">
+                    <div className="mt-3 w-full max-w-[95%] bg-white border border-amber-300 rounded-2xl overflow-hidden shadow-sm">
                       <div className="relative h-36 w-full overflow-hidden">
                         <img
                           src={msg.recommendation.imageUrl}
                           alt={msg.recommendation.name}
                           className="w-full h-full object-cover"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#0B0705] via-transparent to-transparent" />
-                        <div className="absolute bottom-2 left-3 right-3 flex justify-between items-baseline">
-                          <span className="text-sm font-serif text-[#F5E6D0] font-bold">
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
+                        <div className="absolute bottom-2 left-3 right-3 flex justify-between items-baseline text-white">
+                          <span className="text-sm font-serif font-bold">
                             {msg.recommendation.name}
                           </span>
-                          <span className="text-sm font-mono font-bold text-[#D89B5A]">
+                          <span className="text-sm font-mono font-bold text-amber-300">
                             ₹{msg.recommendation.price}
                           </span>
                         </div>
                       </div>
 
                       <div className="p-4 space-y-2">
-                        <p className="text-[11px] text-[#C9A86C] font-light leading-relaxed">
+                        <p className="text-xs text-slate-700 font-light leading-relaxed">
                           {msg.recommendation.reason}
                         </p>
-                        <div className="text-[10px] font-mono text-[#F5E6D0]/60 pt-1">
-                          Notes: {msg.recommendation.notes}
+                        <div className="text-[10px] font-mono text-amber-800 font-semibold pt-1">
+                          Flavor Profile: {msg.recommendation.notes}
                         </div>
 
                         <button
                           onClick={() => handleAddRecommend(msg.recommendation!)}
-                          className="btn-tactile w-full mt-3 py-2.5 rounded-xl bg-gradient-to-r from-[#D89B5A] to-[#B8722E] text-[#0B0705] font-semibold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-md hover:brightness-110"
+                          className="btn-tactile w-full mt-2 py-2.5 rounded-xl bg-gradient-to-r from-amber-600 to-rose-600 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-xs cursor-pointer hover:brightness-105"
                         >
                           {addedItem === msg.recommendation.id ? (
-                            <span>✓ Added to Order</span>
+                            <span>✓ Added to Cart!</span>
                           ) : (
-                            <span>Add to Order · ₹{msg.recommendation.price}</span>
+                            <span>Add to Order &middot; ₹{msg.recommendation.price}</span>
                           )}
                         </button>
                       </div>
@@ -293,47 +282,47 @@ export default function AIBaristaModal() {
               ))}
 
               {isTyping && (
-                <div className="flex items-center gap-1.5 p-3 rounded-xl bg-[#1D110A] w-20">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#D89B5A] animate-bounce" />
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#D89B5A] animate-bounce delay-150" />
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#D89B5A] animate-bounce delay-300" />
+                <div className="flex items-center gap-1.5 p-3 rounded-xl bg-white w-20 shadow-xs border border-slate-200">
+                  <div className="w-2 h-2 rounded-full bg-amber-500 animate-bounce" />
+                  <div className="w-2 h-2 rounded-full bg-rose-500 animate-bounce delay-150" />
+                  <div className="w-2 h-2 rounded-full bg-indigo-500 animate-bounce delay-300" />
                 </div>
               )}
 
               <div ref={chatEndRef} />
             </div>
 
-            {/* Quick-Prompt Suggestion Chips */}
-            <div className="px-6 py-2 border-t border-[#2A1F1A] bg-[#0B0705]/40">
-              <span className="text-[10px] font-mono uppercase tracking-widest text-[#C9A86C]/70 block mb-2">
-                Quick Prompts:
+            {/* Colorful Suggestion Prompts */}
+            <div className="px-5 py-3 border-t border-slate-200 bg-slate-50/70">
+              <span className="text-[10px] font-mono uppercase tracking-widest text-slate-500 block mb-2 font-bold">
+                💡 Popular Flavor Queries:
               </span>
               <div className="flex flex-wrap gap-1.5">
                 {SUGGESTION_CHIPS.map((chip, idx) => (
                   <button
                     key={idx}
-                    onClick={() => handleSend(chip)}
-                    className="text-[11px] px-2.5 py-1 rounded-lg bg-[#1D110A] border border-[#C9A86C]/20 text-[#F5E6D0]/80 hover:border-[#D89B5A] hover:text-[#D89B5A] transition-colors font-light"
+                    onClick={() => handleSend(chip.query)}
+                    className="text-xs px-3 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 hover:border-amber-400 hover:text-amber-800 transition-colors font-medium cursor-pointer shadow-2xs"
                   >
-                    {chip}
+                    {chip.text}
                   </button>
                 ))}
               </div>
             </div>
 
-            {/* Input & Send Bar */}
-            <div className="p-4 border-t border-[#2A1F1A] bg-[#0B0705]/80 flex gap-2">
+            {/* Input Bar */}
+            <div className="p-4 border-t border-slate-200 bg-white flex gap-2">
               <input
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                placeholder="E.g., I want something strong, nutty, and cold..."
-                className="flex-1 bg-[#1A0F0A] border border-[#C9A86C]/30 rounded-xl px-4 py-3 text-xs sm:text-sm text-[#F5E6D0] placeholder-[#F5E6D0]/30 focus:outline-none focus:border-[#D89B5A]"
+                placeholder="E.g., I want something cold, nutty, and sweet..."
+                className="flex-1 bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-amber-600 shadow-inner"
               />
               <button
                 onClick={() => handleSend()}
-                className="px-5 py-3 rounded-xl bg-[#D89B5A] text-[#0B0705] font-bold text-xs uppercase tracking-widest hover:brightness-110 transition-all flex items-center justify-center"
+                className="btn-tactile px-5 py-3 rounded-xl bg-gradient-to-r from-amber-600 to-rose-600 text-white font-bold text-xs uppercase tracking-wider hover:brightness-105 transition-all flex items-center justify-center cursor-pointer shadow-xs"
               >
                 Send
               </button>

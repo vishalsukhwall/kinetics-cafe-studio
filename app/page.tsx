@@ -201,7 +201,7 @@ function FloatingOrderButton() {
   return (
     <button
       onClick={toggleDrawer}
-      className="btn-tactile fixed bottom-8 right-8 z-40 flex items-center gap-3 rounded-full px-6 py-3.5 font-medium transition-all bg-gradient-to-r from-[#D89B5A] to-[#FF7A00] text-[#0B0705] shadow-[0_0_25px_rgba(216,155,90,0.35)] hover:shadow-[0_0_40px_rgba(255,122,0,0.5)] hover:scale-105"
+      className="btn-tactile fixed bottom-8 right-8 z-40 flex items-center gap-3 rounded-full px-5 sm:px-6 py-3.5 font-bold transition-all bg-[#1E293B] hover:bg-slate-900 text-white border border-white/20 shadow-[0_10px_35px_rgba(30,41,59,0.35)] hover:scale-105 cursor-pointer"
       aria-label={`Open order drawer${itemCount > 0 ? `, ${itemCount} items, ₹${totalAmount}` : ''}`}
       data-cursor="hover"
     >
@@ -222,14 +222,14 @@ function FloatingOrderButton() {
           <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
         </svg>
         {itemCount > 0 && (
-          <span className="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full text-[10px] font-bold bg-[#0B0705] text-[#FF7A00]">
+          <span className="absolute -top-2.5 -right-2.5 flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-bold bg-rose-500 text-white shadow-sm animate-bounce">
             {itemCount}
           </span>
         )}
       </div>
 
-      <span className="font-semibold tracking-wider text-xs uppercase">
-        {itemCount > 0 ? `Cart (₹${totalAmount.toLocaleString('en-IN')})` : 'Cart'}
+      <span className="font-semibold tracking-wider text-xs uppercase font-mono">
+        {itemCount > 0 ? `Cart (₹${totalAmount.toLocaleString('en-IN')})` : 'Order Cart'}
       </span>
     </button>
   );
